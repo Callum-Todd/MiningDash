@@ -23,7 +23,11 @@ function update() {
     .then(pricedata => {
         db.price = pricedata.GBP;
     })
-
+    fetch("    https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/workers")
+    .then(response => response.json())
+    .then(data => {
+        db.workers = data.result;
+    })
     fetch("https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/stats")
         .then(response => response.json())
         .then(data => {
@@ -102,7 +106,10 @@ app.get('/json', function(req, res, next){
   // console.log('get route', req.testing);
     res.sendFile(path.join(__dirname + '/public/db.json'));
 });
-
+app.get('/stats', function(req, res, next){
+    // console.log('get route', req.testing);
+      res.sendFile(path.join(__dirname + '/public/daily.html'));
+  });
 // ------------------------------------------------------------>
 // Main
 console.log("Listening at http://localhost:" + port.toString());
@@ -124,9 +131,9 @@ setInterval(() => {
 }, 180000);
 
 const dailyJob = schedule.scheduleJob({hour: 0, minute: 0}, (firetime) => {
+    update();
     console.log("Daily job ran @" + firetime);
     let diff;
-    update();
     if (db.poolbalance < db.dailybalance) {
         diff = (0.2 - db.dailybalance/1000000000000000000) + db.poolbalance;
         console.log("0.2 - " + db.dailybalance/1000000000000000000);
@@ -136,6 +143,14 @@ const dailyJob = schedule.scheduleJob({hour: 0, minute: 0}, (firetime) => {
     let now = new Date();
     db.rewards.push({"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
     db.dailybalance = db.poolbalance;
+
+    db.shares_history.push({
+        "Moira" : db.workers[0].valid_shares,
+        "Andras" : db.workers[1].valid_shares,
+        "Callum" : db.workers[2].valid_shares,
+        "Mark" : db.workers[3].valid_shares
+    })
+
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })

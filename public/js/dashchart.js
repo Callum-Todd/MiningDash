@@ -15,7 +15,6 @@ fetch("db.json")
     document.getElementById('poolbal').innerText = (data.poolbalance/1000000000000000000).toFixed(7) + " Ξ";
     document.getElementById('price').innerText = "£" + data.price;
     document.getElementById('hash').innerText = (data.hashrate/1000000).toFixed(2) + " MH/s";
-    document.getElementById('ticker').innerHTML = "£" + ((data.walletbalance/1000000000000000000) * data.price).toFixed(2);
 
     var ctx = document.getElementById('myChart');
     var myChart = new Chart(ctx, {
@@ -49,7 +48,7 @@ fetch("db.json")
         data: {
             labels: points,
             datasets: [{
-                label: 'Hashrate',
+                label: 'Effective Hashrate',
                 data: data.hash_history,
                 backgroundColor: [
                     'rgba(255, 165, 0, 0.4)'
@@ -61,13 +60,13 @@ fetch("db.json")
             },
         
             {
-                label: 'Luck',
+                label: 'Flexpool Luck',
                 data: data.luck_history,
                 backgroundColor: [
                     'rgba(255, 165, 0, 0)'
                 ],
                 borderColor: [
-                    'lightblue'
+                    'rgb(3, 177, 252)'
                 ],
                 borderWidth: 2
             }]
@@ -85,36 +84,7 @@ fetch("db.json")
         }
     });
 
-    const rTable = document.getElementById('rewardstable');
-    const pTable = document.getElementById('paymentstable');
-    const wTable = document.getElementById('workertable');
-
-    data.rewards.forEach(item => {
-        let row = rTable.insertRow();
-        let date = row.insertCell(0);
-        date.innerHTML = item.date;
-        let amount = row.insertCell(1);
-        amount.innerHTML = (item.amount/1000000000000000000).toFixed(7) + " Ξ";
-        let value = row.insertCell(2);
-        value.innerHTML = (item.amount/1000000000000000000 * item.price).toFixed(2);
-        let price = row.insertCell(3);
-        price.innerHTML = item.price;
-        price.textContent = (+price.textContent).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
-        value.textContent = (+value.textContent).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
-    });
-    data.payments.forEach(item => {
-        let row = pTable.insertRow();
-        let date = row.insertCell(0);
-        date.innerHTML = "<a class=\"datelink\" href=\"https://etherscan.io/tx/" + item.txid + "\">" + item.date + "</a>";
-        let amount = row.insertCell(1);
-        amount.innerHTML = (item.amount/1000000000000000000).toFixed(7) + " Ξ";
-        let value = row.insertCell(2);
-        value.innerHTML = (item.amount/1000000000000000000 * item.price).toFixed(2);
-        let price = row.insertCell(3);
-        price.innerHTML = item.price;
-        price.textContent = (+price.textContent).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
-        value.textContent = (+value.textContent).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
-    });
+    
 
 });
 

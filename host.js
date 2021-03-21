@@ -80,6 +80,9 @@ function update() {
     if (db.hash_history.length >= 50) {
         db.hash_history.shift();
     }
+    if (!db.hash_history[db.hash_history.length] == db.hashrate/100000) {
+        
+    }
     db.hash_history.push(db.hashrate/1000000);
 
 }
@@ -94,7 +97,7 @@ app.get('/json', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/db.json'));
 });
 app.get('/stats', function(req, res, next){
-      res.sendFile(path.join(__dirname + '/public/daily.html'));
+      res.sendFile(path.join(__dirname + '/public/stats.html'));
   });
 app.get('/reset', function(req, res, next){
       db.luck_history = [];

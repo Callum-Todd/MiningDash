@@ -5,7 +5,7 @@ Features:
 - Automated recording of daily returns and payments
 
 Intended Features:
-- Notifcations (Discord?)
+- Notifactions (Discord?)
 - Payout request system
 
 

@@ -17,6 +17,11 @@ app.use(function (req, res, next) {
 // ------------------------------------------------------------>
 // Storage
 var db = jsonfile.readFileSync('./public/db.json');
+function save() {
+    jsonfile.writeFile('./public/db.json', db, function (err) {
+        if (err) console.error(err)
+    })
+}
 function update() {
     fetch("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=GBP")
     .then(response => response.json())
@@ -40,7 +45,7 @@ function update() {
             if (db.luck_history.length >= 50) {
                 db.luck_history.shift();
             }
-                db.luck_history.push(data.result*100);
+                db.luck_history.push(data.result);
 
     })
     fetch("https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/balance")
@@ -64,10 +69,9 @@ function update() {
                 })
                 if (!found) {
                     let now = new Date();
-                    date.format(now, 'DD/MM/YYYY');
                     db.payments.push({  "amount" : ele.amount,
                                         "price" : db.price,
-                                        "date" : now,
+                                        "date" : date.format(now, 'DD/MM/YYYY'),
                                         "txid" : ele.txid})
                 }
             })
@@ -76,38 +80,20 @@ function update() {
     if (db.hash_history.length >= 50) {
         db.hash_history.shift();
     }
-    if (db.hash_history[db.hash_history.length] == db.hashrate) {
-        
-    } else {
-        db.hash_history.push(db.hashrate/1000000);
-    }
+    db.hash_history.push(db.hashrate/1000000);
 
-
-    // console.log("Updating DB");
-
-    // fetch("https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/balance")
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         db.poolbalance = data.result;
-    //     })
 }
-update();
-    
-jsonfile.writeFile('./public/db.json', db, function (err) {
-    if (err) console.error(err)
-})
+update();    
+save();
 // ------------------------------------------------------------>
 // Routing
 app.get('/', function(req, res, next){
-  // console.log('get route', req.testing);
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
 app.get('/json', function(req, res, next){
-  // console.log('get route', req.testing);
     res.sendFile(path.join(__dirname + '/public/db.json'));
 });
 app.get('/stats', function(req, res, next){
-    // console.log('get route', req.testing);
       res.sendFile(path.join(__dirname + '/public/daily.html'));
   });
 // ------------------------------------------------------------>
@@ -143,15 +129,28 @@ const dailyJob = schedule.scheduleJob({hour: 0, minute: 0}, (firetime) => {
     let now = new Date();
     db.rewards.push({"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
     db.dailybalance = db.poolbalance;
-
+    let c, a, m, r;
+    db.workers.forEach(item => {
+        switch (item.name){
+            case "BattleMoira":
+                r = item.valid_shares;
+                break;
+            case "AndrasMiner":
+                a = item.valid_shares;
+                break;
+            case "MarkMiner":
+                m = item.valid_shares;
+                break;
+            case "Junkrat":
+                c = item.valid_shares;
+                break;
+        }
+    });
     db.shares_history.push({
-        "Moira" : db.workers[0].valid_shares,
-        "Andras" : db.workers[1].valid_shares,
-        "Callum" : db.workers[2].valid_shares,
-        "Mark" : db.workers[3].valid_shares
+        "Rig" : r,
+        "Andras" : a,
+        "Callum" : c,
+        "Mark" : m
     })
-
-    jsonfile.writeFile('./public/db.json', db, function (err) {
-        if (err) console.error(err)
-    })
+    save();
 })

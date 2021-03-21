@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Miner Dashboard</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <!-- <link rel="stylesheet" href="/css/skeleton_colours.css"> -->
+    <link rel="stylesheet" href="/css/Chart.css">
+
+    <!-- JS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="/js/Chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row" style=" margin-top: 5%;">
+            <div class="column">
+                <h2 style="display: inline;">BattleMoira</h2>
+                <a class="link" href="/json">
+                    <h6 style="display: inline;">Json</h6>
+                </a>
+                
+                <a class="link" href="https://www.coingecko.com/en/coins/ethereum">
+                    <h6 style="display: inline;">Gecko</h6>
+                </a>
+                <a class="link" href="https://uk.finance.yahoo.com/quote/ETH-GBP/history?p=ETH-GBP">
+                    <h6 style="display: inline;">Price History</h6>
+                </a>
+                
+                <a class="link" href="https://flexpool.io/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F">
+                    <h6 style="display: inline;">Pool</h6>
+                </a>
+                
+                <a class="link" href="https://etherscan.io/address/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F">
+                    <h6 style="display: inline;">Wallet</h6>
+                </a>
+                <p class="link" style="display: inline; margin-right: 20px; font-size: 2rem; margin-top: 0;" id="ticker"></p>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 50px;">
+            <div class="five columns" style="text-align: left; margin-top: 15%;">
+                <div class="item">
+                    <p style="display: inline;">Wallet Balance </p>
+                    <h6 id="walbal" style="display: inline; padding-left: 10px;"></h6>
+                </div>
+                <div class="item">
+                    <p style="display: inline;">Pool Balance </p>
+                    <h6 id="poolbal" style="display: inline; padding-left: 10px;"></h6>
+                </div>
+                <div class="item">
+                    <p style="display: inline;">Current Price  </p>
+                    <h6 id="price" style="display: inline; padding-left: 10px;"></h6>
+                </div>
+                <div class="item">
+                    <p style="display: inline;">Current Hashrate  </p>
+                    <h6 id="hash" style="display: inline; padding-left: 10px;"></h6>
+                </div>
+            </div>
+
+            <div class="seven columns" style="text-align: center;">
+                <h5>Wallet Balance Split</h5>
+                <canvas id="myChart" width="600" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container" style="margin-top: 20px;">
+        <div class="row">
+            <div class="six columns" style="margin-top: 3%; display: inline;">
+                <h4>Workers</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Valid</th>
+                            <th>Invalid</th>
+                            <th>Online</th>
+                        </tr>
+                    </thead>
+                    <tbody id="workertable"></tbody>
+                </table>
+            </div>
+            <div class=" six columns" style="margin-top: 3%; display: inline;">
+                <h4>Payments</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Value</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentstable"></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column" style="margin-top: 3%;">
+                <h4>Daily Returns</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Value</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rewardstable"></tbody>
+                </table>
+            </div>
+        </div>
+            <div class="row">
+            <canvas id="historyChart" width="400px" height="200px"></canvas>
+
+            </div>
+        </div>
+        <script src="/js/dashchart.js"></script>
+    </div>
+</body>
+</html>

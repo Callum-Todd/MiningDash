@@ -1,0 +1,35 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: black;
+}
+
+.link {
+    display: inline;
+    float: right;
+    padding-left: 10px;
+    margin-top: 3px;
+    text-decoration: none;
+    color: #d3d7cf;
+    transition: 0.2s;
+}
+.link:hover {
+    color: orange;
+}
+
+.datelink {
+    text-decoration: none;
+    color: orange;
+    transition: 0.2s;
+}
+
+.datelink:hover {
+    color: white;
+}
+
+/* #ticker:hover {
+    content: "📈🚀🚀";
+} */

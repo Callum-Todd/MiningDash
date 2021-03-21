@@ -122,7 +122,7 @@ setInterval(() => {
     update();
 }, 180000);
 
-const dailyJob = schedule.scheduleJob({hour: 0, minute: 0}, (firetime) => {
+const dailyJob = schedule.scheduleJob({hour: 24, minute: 59}, (firetime) => {
     update();
     console.log("Daily job ran @" + firetime);
     let diff;

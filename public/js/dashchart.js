@@ -16,8 +16,12 @@ fetch("db.json")
     document.getElementById('price').innerText = "£" + data.price;
     document.getElementById('hash').innerText = (data.hashrate/1000000).toFixed(2) + " MH/s";
 
-    var ctx = document.getElementById('myChart');
-    var myChart = new Chart(ctx, {
+    let points = [];
+    for (let index = 0; index < 50; index++) {
+        points.push(index);
+    }
+    var ctx = document.getElementById('pieChart');
+    var pieChart = new Chart(ctx, {
         type: 'pie',
         data: {
             labels: ['Callum', 'Andras', 'Mark'],
@@ -39,11 +43,7 @@ fetch("db.json")
         },
     });
     var ctx = document.getElementById('historyChart');
-    let points = [];
-    for (let index = 0; index < 50; index++) {
-        points.push(index);
-    }
-    var myChart = new Chart(ctx, {
+    var histChart = new Chart(ctx, {
         type: 'line',
         data: {
             labels: points,
@@ -55,18 +55,6 @@ fetch("db.json")
                 ],
                 borderColor: [
                     'rgba(255, 165, 0, 1)'
-                ],
-                borderWidth: 2
-            },
-        
-            {
-                label: 'Flexpool Luck',
-                data: data.luck_history,
-                backgroundColor: [
-                    'rgba(255, 165, 0, 0)'
-                ],
-                borderColor: [
-                    'rgb(3, 177, 252)'
                 ],
                 borderWidth: 2
             }]
@@ -90,8 +78,42 @@ fetch("db.json")
             }
         }
     });
+    var ctx = document.getElementById('luckChart');
+    var luckChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: points,
+            datasets: [{
+                label: 'Pool Luck',
+                data: data.luck_history,
+                backgroundColor: [
+                    'rgba(255, 165, 0, 0.0)'
+                ],
+                borderColor: [
+                    'rgba(0, 145, 255)'
+                ],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    display: false,
+                    scaleLabel: {
+                        display: false,
+                        labelString: '5 Mins'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Luck'
+                    }
+                }]
+            }
+        }
+    });
 
-    
-
-});
+}); // end of fetch
 

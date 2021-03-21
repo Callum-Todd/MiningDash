@@ -80,6 +80,13 @@ fetch("db.json")
                         labelString: '5 Mins'
                     }
                 }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'MH/s'
+                    }
+                }]
             }
         }
     });

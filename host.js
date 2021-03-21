@@ -96,6 +96,12 @@ app.get('/json', function(req, res, next){
 app.get('/stats', function(req, res, next){
       res.sendFile(path.join(__dirname + '/public/daily.html'));
   });
+app.get('/reset', function(req, res, next){
+      db.luck_history = [];
+      db.hash_history = [];
+      save();
+      res.sendFile(path.join(__dirname + '/public/index.html'));
+  });
 // ------------------------------------------------------------>
 // Main
 console.log("Listening at http://localhost:" + port.toString());
@@ -150,7 +156,8 @@ const dailyJob = schedule.scheduleJob({hour: 0, minute: 0}, (firetime) => {
         "Rig" : r,
         "Andras" : a,
         "Callum" : c,
-        "Mark" : m
+        "Mark" : m, 
+        "Total" : r+a+c+m
     })
     save();
 })

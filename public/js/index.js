@@ -54,7 +54,7 @@ fetch("db.json")
         valid.innerHTML = item.valid_shares;
         stale.innerHTML = item.stale_shares;
         online.innerHTML = item.online;
-        share.innerHTML = ((item.valid_shares / sum) * 100 ) + '%' ;
+        share.innerHTML = ((item.valid_shares / sum) * 100 ).toFixed(2) + '%' ;
 
 
     })

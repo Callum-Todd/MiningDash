@@ -80,11 +80,11 @@ function update() {
     if (db.hash_history.length >= 50) {
         db.hash_history.shift();
     }
-    if (!db.hash_history[db.hash_history.length] == db.hashrate/100000) {
+    if (db.hash_history[db.hash_history.length] == db.hashrate/100000) {
         
+    } else {
+        db.hash_history.push(db.hashrate/1000000);
     }
-    db.hash_history.push(db.hashrate/1000000);
-
 }
 update();    
 save();
@@ -125,7 +125,7 @@ setInterval(() => {
     update();
 }, 180000);
 
-const dailyJob = schedule.scheduleJob({hour: 24, minute: 59}, (firetime) => {
+const dailyJob = schedule.scheduleJob({hour: 23, minute: 59}, (firetime) => {
     update();
     console.log("Daily job ran @" + firetime);
     let diff;
@@ -138,13 +138,13 @@ const dailyJob = schedule.scheduleJob({hour: 24, minute: 59}, (firetime) => {
     let now = new Date();
     db.rewards.push({"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
     db.dailybalance = db.poolbalance;
-    let c, a, m, r;
+    let [c, a, m, r] = [0,0,0,0];
     db.workers.forEach(item => {
         switch (item.name){
             case "BattleMoira":
                 r = item.valid_shares;
                 break;
-            case "AndrasMiner":
+            case "Torbjorn":
                 a = item.valid_shares;
                 break;
             case "MarkMiner":

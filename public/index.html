@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><!-- Basic Page Needs
+<head>
+    <!-- Metas
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta charset="utf-8">
     <title>Miner Dashboard</title>
@@ -20,7 +21,6 @@
     <link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/skeleton.css">
-    <!-- <link rel="stylesheet" href="/css/skeleton_colours.css"> -->
     <link rel="stylesheet" href="/css/Chart.css">
     <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
 
@@ -30,6 +30,7 @@
 </head>
 <body>
     <div class="container">
+
         <div class="row" style=" margin-top: 5%;">
             <div class="column">
                 <h2 style="display: inline;">BattleMoira</h2>
@@ -57,6 +58,7 @@
                 <p class="link" style="display: inline; margin-right: 20px; font-size: 2rem; margin-top: 0;" id="ticker"></p>
             </div>
         </div>
+
 
         <div class="row" style="margin-top: 50px;">
             <div class="five columns" style="text-align: left; margin-top: 15%;">
@@ -86,6 +88,7 @@
     </div>
     
     <div class="container" style="margin-top: 20px;">
+
         <div class="row">
             <div class="six columns" style="margin-top: 3%; display: inline;">
                 <h4>Workers</h4>
@@ -117,6 +120,7 @@
                 </table>
             </div>
         </div>
+
         <div class="row">
             <div class="column" style="margin-top: 3%;">
                 <h4>Daily Returns</h4>
@@ -133,10 +137,10 @@
                 </table>
             </div>
         </div>
-            <div class="row">
-            <canvas id="historyChart" width="400px" height="200px"></canvas>
-            <canvas id="luckChart" width="400px" height="200px"></canvas>
 
+            <div class="row">
+                <canvas id="historyChart" width="400px" height="200px"></canvas>
+                <canvas id="luckChart" width="400px" height="200px"></canvas>
             </div>
         </div>
         <script src="/js/dashchart.js"></script>

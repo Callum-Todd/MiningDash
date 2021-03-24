@@ -88,6 +88,7 @@ function update() {
 }
 update();    
 save();
+
 // ------------------------------------------------------------>
 // Routing
 app.get('/', function(req, res, next){
@@ -97,14 +98,15 @@ app.get('/json', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/db.json'));
 });
 app.get('/stats', function(req, res, next){
-      res.sendFile(path.join(__dirname + '/public/stats.html'));
-  });
+    res.sendFile(path.join(__dirname + '/public/stats.html'));
+});
 app.get('/reset', function(req, res, next){
-      db.luck_history = [];
-      db.hash_history = [];
-      save();
-      res.sendFile(path.join(__dirname + '/public/index.html'));
-  });
+    db.luck_history = [];
+    db.hash_history = [];
+    save();
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
+
 // ------------------------------------------------------------>
 // Main
 console.log("Listening at http://localhost:" + port.toString());
@@ -125,6 +127,7 @@ setInterval(() => {
     update();
 }, 180000);
 
+// Daily Job executed at midnight
 const dailyJob = schedule.scheduleJob({hour: 23, minute: 59}, (firetime) => {
     update();
     console.log("Daily job ran @" + firetime);

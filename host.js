@@ -156,12 +156,12 @@ const dailyJob = schedule.scheduleJob({hour: 23, minute: 59}, (firetime) => {
         }
     });
     db.shares_history.push({
-        "Date" : date.format(now, 'DD/MM/YYYY'),
-        "Rig" : r,
-        "Andras" : a,
-        "Callum" : c,
-        "Mark" : m, 
-        "Total" : r+a+c+m
+        "date" : date.format(now, 'DD/MM/YYYY'),
+        "rig" : r,
+        "andras" : a,
+        "callum" : c,
+        "mark" : m, 
+        "total" : r+a+c+m
     })
     save();
 })

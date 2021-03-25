@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Miner Dashboard</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/Chart.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+
+    <!-- JS
+        –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+        <script src="/js/Chart.js"></script>
+        <script src="/js/projections.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            
+            <div class="row" style=" margin-top: 5%; padding-bottom: 40px;">
+                <div class="column">
+                    <h2 style="display: inline;">Projections</h2>
+                    
+                    <a class="link" href="https://flexpool.io/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F">
+                        <h6 class="inline">Pool</h6>
+                    </a>
+                    
+                    <a class="link" href="https://etherscan.io/address/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F">
+                        <h6 class="inline">Wallet</h6>
+                    </a>
+                    
+                    <a class="link" href="/history">
+                        <h6 class="inline">History</h6>
+                    </a>
+                    
+                    <a class="link" href="/">
+                        <h6 class="inline">Dashboard</h6>
+                    </a>
+                    
+                    <p class="link inline" style="margin-right: 20px; font-size: 2rem; margin-top: 0;" id="ticker"></p>
+                </div>
+            </div>
+            
+            <div class="row">
+                
+                <div class="column">
+                    <div>
+                        <h1 class="inline">Average Annual</h1>
+                        <h1 class="inline" style="position: absolute; right: 0;" id="annual">£ 7327</h1>
+                    </div>
+                    <div>
+                        <h2 class="inline">Average Monthly</h2>
+                        <h2 class="inline" style="position: absolute; right: 0;" id="monthly">£ 7327</h2>
+                    </div>
+                    <div>
+                        <h3 class="inline">Average Weekly</h3>
+                        <h3 class="inline" style="position: absolute; right: 0;" id="weekly">£ 7327</h3>
+                    </div>
+                    <div>
+                        <h4 class="inline">Average Daily</h4>
+                        <h4 class="inline" style="position: absolute; right: 0;" id="daily">£ 7327</h4>
+                    </div>
+
+                    <h5 id="priceline" style="text-align: center; padding-top: 20px;">at current price of </h5>
+                </div>
+            </div>
+            
+        <script src="/js/dashchart.js"></script>
+        <script src="/js/index.js"></script>
+    </div>
+</body>
+</html>

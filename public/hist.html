@@ -26,54 +26,29 @@
 
     <!-- JS
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <script src="/js/Chart.js"></script>
+
 </head>
 <body>
     <div class="container">
         <div class="row" style=" margin-top: 5%;">
             <div class="column">
-                <h2 style="display: inline;">BattleMoira</h2>
-                <!-- <a class="link" href="/json">
-                    <h6 style="display: inline;">Json</h6>
-                </a> -->
-                
-                <!-- <a class="link" href="https://www.coingecko.com/en/coins/ethereum">
-                    <h6 style="display: inline;">Gecko</h6>
-                </a> -->
-                <!-- <a class="link" href="https://uk.finance.yahoo.com/quote/ETH-GBP/history?p=ETH-GBP">
-                    <h6 style="display: inline;">Price History</h6>
-                </a>
-                 -->
+                <h2 class="inline">History</h2>
+
                 <a class="link" href="https://flexpool.io/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F">
-                    <h6 style="display: inline;">Pool</h6>
+                    <h6 class="inline">Pool</h6>
                 </a>
                 <a class="link" href="https://etherscan.io/address/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F">
-                    <h6 style="display: inline;">Wallet</h6>
+                    <h6 class="inline">Wallet</h6>
+                </a>
+                <a class="link" href="/projections">
+                    <h6 class="inline">Projections</h6>
                 </a>
                 <a class="link" href="/">
-                    <h6 style="display: inline;">Dashboard</h6>
+                    <h6 class="inline">Dashboard</h6>
                 </a>
                 <p class="link" style="display: inline; margin-right: 20px; font-size: 2rem; margin-top: 0;" id="ticker">£</p>
             </div>
         </div>
-
-
-        <div class="row" style="margin-top: 30px;">
-            <h4>Current Workers</h4>
-                <table style="width: 100%;">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Valid</th>
-                    <th>Stale</th>
-                    <th>Share</th>
-                    <th>Online</th>
-                </tr>
-            </thead>
-            <tbody id="workertable"></tbody>
-        </table>
-        </div>
-
 
         <div class="row">
             <div class="six columns">
@@ -91,27 +66,6 @@
                 </table>
             </div>
             <div class="six columns">
-                <h4>Payments</h4>
-            <table style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Amount</th>
-                        <th>Value</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody id="paymentstable"></tbody>
-            </table>
-                
-            </div>
-            <!-- <script src="/js/dashchart.js"></script> -->
-            <script src="/js/index.js"></script>
-        </div>
-
-
-        <div class="row">
-            <div class="column">
                 <h4>Worker History</h4>
                 <table style="width: 100%;">
                     <thead>
@@ -126,10 +80,31 @@
                     </thead>
                     <tbody id="workhisttable"></tbody>
                 </table>
+                
+            </div>
+            <!-- <script src="/js/dashchart.js"></script> -->
+        </div>
+        
+        
+        <div class="row">
+            <div class="column">
+                <h4>Payments</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Value</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentstable"></tbody>
+                </table>
             </div>
         </div>
-
         
+        
+        <script src="/js/hist.js"></script>
     </div>
 </body>
 </html>

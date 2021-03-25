@@ -5,7 +5,7 @@ var fetch = require('cross-fetch');
 var path = require('path');
 var schedule = require('node-schedule');
 var date = require('date-and-time');
-var port = 8080;
+var port = 3000;
 
 app.use(express.static(__dirname + '/public'));
 app.use(function (req, res, next) {
@@ -97,8 +97,11 @@ app.get('/', function(req, res, next){
 app.get('/json', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/db.json'));
 });
-app.get('/stats', function(req, res, next){
-    res.sendFile(path.join(__dirname + '/public/stats.html'));
+app.get('/history', function(req, res, next){
+    res.sendFile(path.join(__dirname + '/public/hist.html'));
+});
+app.get('/projections', function(req, res, next){
+    res.sendFile(path.join(__dirname + '/public/proj.html'));
 });
 app.get('/reset', function(req, res, next){
     db.luck_history = [];

@@ -29,6 +29,9 @@ body {
 .datelink:hover {
     color: white;
 }
+.inline {
+    display: inline;
+}
 
 
 /* #ticker:hover {

@@ -11,7 +11,7 @@ fetch("db.json")
     let average_daily = sum / count;
     average_daily = ((average_daily/1000000000000000000) * data.price);
 
-    let cost_daily = 4.57;
+    let cost_daily = 4.10;
     document.getElementById("daily").innerHTML = "£" + average_daily.toFixed(2);
     document.getElementById("weekly").innerHTML = "£" + (average_daily * 7).toFixed(2);
     document.getElementById("monthly").innerHTML = "£" + (average_daily * 28).toFixed(2);

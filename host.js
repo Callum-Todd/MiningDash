@@ -28,33 +28,34 @@ function update() {
     .then(pricedata => {
         db.price = pricedata.GBP;
     })
-    fetch("    https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/workers")
+    fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/workers")
     .then(response => response.json())
     .then(data => {
         db.workers = data.result;
     })
-    fetch("https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/stats")
+    fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/dashboard")
         .then(response => response.json())
         .then(data => {
             if (data.result == null) return;
-            db.hashrate = data.result.current.effective_hashrate;
+            db.hashrate = data.result.currentStatistics.reportedHashrate;
+            db.poolbalance = data.result.currentStatistics.unpaid;
     })
-    fetch("https://flexpool.io/api/v1/pool/currentLuck")
-        .then(response => response.json())
-        .then(data => {
-            if (db.luck_history.length >= 50) {
-                db.luck_history.shift();
-            }
-                db.luck_history.push(data.result);
+    // fetch("https://flexpool.io/api/v1/pool/currentLuck")
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         if (db.luck_history.length >= 50) {
+    //             db.luck_history.shift();
+    //         }
+    //             db.luck_history.push(data.result);
 
-    })
-    fetch("https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/balance")
-        .then(response => response.json())
-        .then(data => {
-            db.poolbalance = data.result;
-    })
+    // // })
+    // fetch("https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/balance")
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         db.poolbalance = data.result;
+    // })
         
-    fetch("https://flexpool.io/api/v1/miner/0xedD0CaF72bC3bc30c185Db4066a55102eD54A01F/payments?page=0")
+    fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/payouts")
         .then(response =>response.json())
         .then(data => {
             if (data.result.data == null) {
@@ -63,16 +64,16 @@ function update() {
             data.result.data.forEach(item => {
                 let found = false;
                 db.payments.forEach(ele => {
-                    if (item.txid == ele.txid) {
+                    if (item.txHash == ele.txid) {
                         found = true;
                     }
                 })
                 if (!found) {
                     let now = new Date();
-                    db.payments.push({  "amount" : ele.amount,
+                    db.payments.push({  "amount" : item.amount,
                                         "price" : db.price,
                                         "date" : date.format(now, 'DD/MM/YYYY'),
-                                        "txid" : ele.txid})
+                                        "txid" : item.txHash)
                 }
             })
         })

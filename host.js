@@ -127,29 +127,41 @@ setInterval(() => {
 }, 180000);
 
 const sharesUpdate = schedule.scheduleJob('0 */12 * * *', (firetime) => {
+    let sum = 0;
+    fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/history")
+    .then(response => response.json())
+    .then(histData => {
+        histData.data.forEach(item => {
+            sum += item.validShares;
+        });
+        
+})
     let [c, a, m, r] = [0,0,0,0];
-    db.workers.forEach(item => {
-        switch (item.worker){
-            case "battlemoira":
-                r = item.validShares;
-                break;
-            case "torbjorn":
-                a = item.validShares;
-                break;
-            case "markminer":
-                m = item.validShares;
-                break;
-            case "junkrat":
-                c = item.validShares;
-                break;
-        }
-    });
+    // db.workers.forEach(item => {
+    //     switch (item.worker){
+    //         case "battlemoira":
+    //             r = item.validShares;
+    //             break;
+    //         case "torbjorn":
+    //             a = item.validShares;
+    //             break;
+    //         case "markminer":
+    //             m = item.validShares;
+    //             break;
+    //         case "junkrat":
+    //             c = item.validShares;
+    //             break;
+    //     }
+    // });
+
     db.shares_buffer.push({
-        "rig" : r,
+        // NEEDS FIXED! find a way to see indivdual workers history
+        "rig" : sum,
         "andras" : a,
         "callum" : c,
         "mark" : m, 
-        "total" : r+a+c+m
+        "total" : sum
+        // "total" : r+a+c+m
     })
 
 });

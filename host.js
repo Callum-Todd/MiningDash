@@ -128,7 +128,7 @@ setInterval(() => {
     save();
 }, 180000);
 
-const sharesUpdate = schedule.scheduleJob('0 */12 * * *', (firetime) => {
+const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
     let [c, a, m, r] = [0,0,0,0];
     fetch('https://api.ethermine.org//miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/workers')
     .then(response => response.json())
@@ -141,7 +141,7 @@ const sharesUpdate = schedule.scheduleJob('0 */12 * * *', (firetime) => {
                 case "junkrat":
                     c = element.validShares;
                     break;
-                case "ana":
+                case "torbjorn":
                     a = element.validShares;
                     break;
                 case "markminer":

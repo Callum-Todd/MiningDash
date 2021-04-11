@@ -41,6 +41,8 @@ function update() {
             db.hashrate = dashboardData.data.currentStatistics.reportedHashrate;
             db.poolbalance = dashboardData.data.currentStatistics.unpaid;
             db.workers = dashboardData.data.workers;
+            db.valid = dashboardData.data.currentStatistics.validShares;
+            db.stale = dashboardData.data.currentStatistics.staleShares;
     })
     save();
     // fetch("https://flexpool.io/api/v1/pool/currentLuck")
@@ -127,40 +129,15 @@ setInterval(() => {
 }, 180000);
 
 const sharesUpdate = schedule.scheduleJob('0 */12 * * *', (firetime) => {
-    let sum = 0;
-    fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/history")
-    .then(response => response.json())
-    .then(histData => {
-        histData.data.forEach(item => {
-            sum += item.validShares;
-        });
-        
-})
-    let [c, a, m, r] = [0,0,0,0];
-    // db.workers.forEach(item => {
-    //     switch (item.worker){
-    //         case "battlemoira":
-    //             r = item.validShares;
-    //             break;
-    //         case "torbjorn":
-    //             a = item.validShares;
-    //             break;
-    //         case "markminer":
-    //             m = item.validShares;
-    //             break;
-    //         case "junkrat":
-    //             c = item.validShares;
-    //             break;
-    //     }
-    // });
+
 
     db.shares_buffer.push({
         // NEEDS FIXED! find a way to see indivdual workers history
-        "rig" : sum,
-        "andras" : a,
-        "callum" : c,
-        "mark" : m, 
-        "total" : sum
+        // "rig" : sum,
+        // "andras" : a,
+        // "callum" : c,
+        // "mark" : m, 
+        "total" : db.valid
         // "total" : r+a+c+m
     })
 
@@ -181,14 +158,17 @@ const dailyJob = schedule.scheduleJob('5 */24 * * *', (firetime) => {
     db.rewards.push({"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
     db.dailybalance = db.poolbalance;
     
-    let first = db.shares_buffer[db.shares_buffer.length - 2];
-    let second = db.shares_buffer[db.shares_buffer.length - 1];
-
+    let sum = 0;
+    for (let i = 0; i < db.shares_buffer.length; i++) {
+        const element = db.shares_buffer[i].total;
+        sum += element;
+    }
+    db.shares_buffer.length = 0;
     let [c, a, m, r] = [0,0,0,0];
-    r = first.rig + second.rig;
-    m = first.mark + second.mark;
-    a = first.andras + second.andras;
-    c = first.callum + second.callum;
+    // r = first.rig + second.rig;
+    // m = first.mark + second.mark;
+    // a = first.andras + second.andras;
+    // c = first.callum + second.callum;
 
     db.shares_history.push({
         "date" : date.format(now, 'DD/MM/YYYY'),
@@ -196,7 +176,7 @@ const dailyJob = schedule.scheduleJob('5 */24 * * *', (firetime) => {
         "andras" : a,
         "callum" : c,
         "mark" : m, 
-        "total" : r+a+c+m
+        "total" : sum
     })
     save();
 })

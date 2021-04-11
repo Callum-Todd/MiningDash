@@ -42,7 +42,7 @@ fetch("db.json")
 
     let sum = 0;
     data.workers.forEach(item =>{ 
-        sum += item.valid_shares;
+        sum += item.validShares;
     })
     console.log(sum);
 
@@ -53,13 +53,13 @@ fetch("db.json")
         let valid = row.insertCell(1);
         let stale = row.insertCell(2);
         let share = row.insertCell(3);
-        let online = row.insertCell(4);
+        // let online = row.insertCell(4);
 
-        name.innerHTML = item.name;
-        valid.innerHTML = item.valid_shares;
-        stale.innerHTML = item.stale_shares;
-        online.innerHTML = item.online;
-        share.innerHTML = ((item.valid_shares / sum) * 100 ).toFixed(2) + '%' ;
+        name.innerHTML = item.worker;
+        valid.innerHTML = item.validShares;
+        stale.innerHTML = item.staleShares;
+        // online.innerHTML = item.online;
+        share.innerHTML = ((item.validShares / sum) * 100 ).toFixed(2) + '%' ;
         
     }
 

@@ -78,42 +78,42 @@ fetch("db.json")
             }
         }
     });
-    var ctx = document.getElementById('luckChart');
-    var luckChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: points,
-            datasets: [{
-                label: 'Pool Luck',
-                data: data.luck_history,
-                backgroundColor: [
-                    'rgba(255, 165, 0, 0.0)'
-                ],
-                borderColor: [
-                    'rgba(0, 145, 255)'
-                ],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    display: false,
-                    scaleLabel: {
-                        display: false,
-                        labelString: '5 Mins'
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Luck'
-                    }
-                }]
-            }
-        }
-    });
+    // var ctx = document.getElementById('luckChart');
+    // var luckChart = new Chart(ctx, {
+    //     type: 'line',
+    //     data: {
+    //         labels: points,
+    //         datasets: [{
+    //             label: 'Pool Luck',
+    //             data: data.luck_history,
+    //             backgroundColor: [
+    //                 'rgba(255, 165, 0, 0.0)'
+    //             ],
+    //             borderColor: [
+    //                 'rgba(0, 145, 255)'
+    //             ],
+    //             borderWidth: 2
+    //         }]
+    //     },
+    //     options: {
+    //         scales: {
+    //             xAxes: [{
+    //                 display: false,
+    //                 scaleLabel: {
+    //                     display: false,
+    //                     labelString: '5 Mins'
+    //                 }
+    //             }],
+    //             yAxes: [{
+    //                 display: true,
+    //                 scaleLabel: {
+    //                     display: true,
+    //                     labelString: 'Luck'
+    //                 }
+    //             }]
+    //         }
+    //     }
+    // });
 
 }); // end of fetch
 

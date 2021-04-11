@@ -141,7 +141,7 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
                 case "junkrat":
                     c = element.validShares;
                     break;
-                case "torbjorn":
+                case "torbjon":
                     a = element.validShares;
                     break;
                 case "markminer":

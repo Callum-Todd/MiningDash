@@ -130,10 +130,10 @@ setInterval(() => {
 
 const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
     let [c, a, m, r] = [0,0,0,0];
-    fetch('https://api.ethermine.org//miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/workers')
-    .then(response => response.json())
-    .then(respData => {
-        respData.data.forEach(element => {
+    // fetch('https://api.ethermine.org//miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/workers')
+    // .then(response => response.json())
+    // .then(respData => {
+        db.workers.forEach(element => {
             switch (element.worker) {
                 case "battlemoira":
                     r = element.validShares;
@@ -153,7 +153,6 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
             }
 
         });
-    })
 
 
     db.shares_buffer.push({

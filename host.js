@@ -155,7 +155,7 @@ setTimeout(() => {
         sum += element.mark;
     });
     console.log("Shares mined today:  " + sum);
-    console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(5));
+    console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(7));
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })
@@ -164,7 +164,7 @@ setTimeout(() => {
 setInterval(() => { 
     update();
     // console.log(db.workers);
-    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(5) + " Ether");
+    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(7) + " Ether");
     console.log("Price: " + db.price + " gbp");
     console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
     console.table(db.shares_buffer);

@@ -163,7 +163,18 @@ setTimeout(() => {
 setInterval(() => { 
     update();
     // console.log(db.workers);
+    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(5) + " Ether");
+    console.log("Price: " + db.price + " gbp");
+    console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
     console.table(db.shares_buffer);
+    let sum = 0;
+    db.shares_buffer.forEach(element => {
+        sum += element.rig;
+        sum += element.andras;
+        sum += element.callum;
+        sum += element.mark;
+    });
+    console.log("Shares mined today:  " + sum);
     save();
 }, 180000);
 

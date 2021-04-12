@@ -6,14 +6,9 @@ var path = require('path');
 var schedule = require('node-schedule');
 var date = require('date-and-time');
 var port = 3000;
-//test
+
 
 app.use(express.static(__dirname + '/public'));
-// app.use(function (req, res, next) {
-//     // req.testing = 'testing';
-//     console.log(req.connection.remoteAddress);
-//     return next();
-// });
 app.use(express.urlencoded({
     extended: true
   }))
@@ -40,8 +35,6 @@ function update() {
     fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/dashboard")
         .then(response => response.json())
         .then(dashboardData => {
-            // if (dashboardData.result == null) return;
-            // console.log("reported hashrate == " + dashboardData.result.data.currentStatistics.reportedHashrate);
             db.hashrate = dashboardData.data.currentStatistics.reportedHashrate;
             db.poolbalance = dashboardData.data.currentStatistics.unpaid;
             db.workers = dashboardData.data.workers;
@@ -49,13 +42,7 @@ function update() {
             db.stale = dashboardData.data.currentStatistics.staleShares;
     })
     save();
-    // fetch("https://flexpool.io/api/v1/pool/currentLuck")
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         if (db.luck_history.length >= 50) {
-    //             db.luck_history.shift();
-    //         }
-    //             db.luck_history.push(data.result);
+
         
     // fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/payouts")
     //     .then(response =>response.json())
@@ -97,6 +84,8 @@ update();
 // Routing
 app.get('/', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/index.html'));
+    var ip = req.headers['x-real-ip'] || req.socket.remoteAddress;
+    console.log(ip + " has connected!");
 });
 app.get('/json', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/db.json'));
@@ -152,7 +141,9 @@ app.post('/submitpayment', (req, res) => {
 console.log("Listening at http://localhost:" + port.toString());
 app.listen(port);
 
-setTimeout(() => {  console.log(db.workers);
+setTimeout(() => {  
+    // console.log(db.workers);
+    console.table(db.shares_buffer);
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })
@@ -160,7 +151,7 @@ setTimeout(() => {  console.log(db.workers);
 
 setInterval(() => { 
     update();
-    console.log(db.workers);
+    // console.log(db.workers);
     console.table(db.shares_buffer);
     save();
 }, 180000);

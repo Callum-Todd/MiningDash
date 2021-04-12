@@ -161,7 +161,8 @@ setTimeout(() => {  console.log(db);
 setInterval(() => { 
     console.log("<-------------- Printing JSON -------------->"); 
     update();
-    console.log(db);
+    console.log(db.workers);
+    console.log(db.shares_buffer);
     save();
 }, 180000);
 

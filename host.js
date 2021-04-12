@@ -145,7 +145,7 @@ setTimeout(() => {
     // console.log(db.workers);
     console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(5) + " Ether");
     console.log("Price: " + db.price + " gbp");
-    console.log(db.hashrate/1000000 + " mH/s");
+    console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
     console.table(db.shares_buffer);
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)

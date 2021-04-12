@@ -175,6 +175,7 @@ setInterval(() => {
         sum += element.mark;
     });
     console.log("Shares mined today:  " + sum);
+    console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(5));
     save();
 }, 180000);
 

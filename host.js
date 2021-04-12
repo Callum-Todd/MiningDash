@@ -5,7 +5,7 @@ var fetch = require('cross-fetch');
 var path = require('path');
 var schedule = require('node-schedule');
 var date = require('date-and-time');
-var port = 3000;
+var port = 8080;
 
 
 app.use(express.static(__dirname + '/public'));
@@ -155,6 +155,7 @@ setTimeout(() => {
         sum += element.mark;
     });
     console.log("Shares mined today:  " + sum);
+    console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(5));
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })

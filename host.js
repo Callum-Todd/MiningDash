@@ -222,8 +222,7 @@ const dailyJob = schedule.scheduleJob('5 */24 * * *', (firetime) => {
     console.log("Daily job ran @" + firetime);
     let diff;
     if (db.poolbalance < db.dailybalance) {
-        diff = (0.2 - db.dailybalance/1000000000000000000) + db.poolbalance;
-        console.log("0.2 - " + db.dailybalance/1000000000000000000);
+        diff = (0.1 - db.dailybalance/1000000000000000000) + db.poolbalance;
     } else {
         diff = db.poolbalance - db.dailybalance;
     }

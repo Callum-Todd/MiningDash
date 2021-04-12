@@ -147,6 +147,14 @@ setTimeout(() => {
     console.log("Price: " + db.price + " gbp");
     console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
     console.table(db.shares_buffer);
+    let sum = 0;
+    db.shares_buffer.forEach(element => {
+        sum += element.rig;
+        sum += element.andras;
+        sum += element.callum;
+        sum += element.mark;
+    });
+    console.log("Shares mined today:  " + sum);
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })

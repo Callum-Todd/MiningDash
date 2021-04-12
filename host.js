@@ -152,7 +152,7 @@ app.post('/submitpayment', (req, res) => {
 console.log("Listening at http://localhost:" + port.toString());
 app.listen(port);
 
-setTimeout(() => {  console.log(db);
+setTimeout(() => {  console.table(db.workers);
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })

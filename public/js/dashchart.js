@@ -6,9 +6,9 @@ fetch("db.json")
 
     let c, a, m, bal8;
     bal8 = data.walletbalance / 8;
-    c = bal8 *3;
-    a = bal8 *3;
-    m = bal8 *2;
+    c = 3;
+    a = 3;
+    m = 2;
 
     //  Fill Data into html fields
     document.getElementById('walbal').innerText = (data.walletbalance/1000000000000000000).toFixed(7) + " Ξ";
@@ -27,7 +27,7 @@ fetch("db.json")
             labels: ['Callum', 'Andras', 'Mark'],
             datasets: [{
                 label: 'Split of Balance',
-                data: [((c/1000000000000000000)).toFixed(7), ((a/1000000000000000000)).toFixed(7), ((m/1000000000000000000)).toFixed(7)],
+                data: [c, a, m],
                 backgroundColor: [
                     'rgba(37, 204, 247,0.8)',
                     'rgba(27, 156, 252,0.8)',

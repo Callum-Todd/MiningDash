@@ -8,11 +8,14 @@ var date = require('date-and-time');
 var port = 3000;
 
 app.use(express.static(__dirname + '/public'));
-app.use(function (req, res, next) {
-    // req.testing = 'testing';
-    // console.log(req.connection.remoteAddress);
-    return next();
-});
+// app.use(function (req, res, next) {
+//     // req.testing = 'testing';
+//     console.log(req.connection.remoteAddress);
+//     return next();
+// });
+app.use(express.urlencoded({
+    extended: true
+  }))
 
 // ------------------------------------------------------------>
 // Storage
@@ -62,7 +65,7 @@ function update() {
     //         payoutData.result.data.forEach(item => {
     //             let found = false;
     //             db.payments.forEach(ele => {
-    //                 if (item.txHash == ele.txid) {
+    //                 if (item.txHash == ele.amount) {
     //                     found = true;
     //                 }
     //             })
@@ -109,6 +112,35 @@ app.get('/reset', function(req, res, next){
     save();
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
+app.get('/clearwallet', function(req, res, next){
+    db.walletbalance = 0;
+    save();
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+}); 
+app.get('/payments', function(req, res, next){
+    res.sendFile(path.join(__dirname + '/public/payed.html'));
+});
+
+app.post('/submitpayment', (req, res) => {
+    const amount = req.body.amount_field;
+    const price = req.body.price_field;
+    let date = req.body.date_field;
+    const txid = req.body.txid_field;
+    const year = date.substring(0,4);
+    const month = date.substring(5,7);
+    const day = date.substring(8, 10);
+    date = day + "/" + month + "/" + year;
+
+
+    db.payments.push({
+        "amount": (amount*1000000000000000000),
+        "price": price,
+        "date": date,
+        "txid": txid
+      })
+      save();
+      res.sendFile(path.join(__dirname + '/public/index.html'));
+  })
 
 // ------------------------------------------------------------>
 // Main

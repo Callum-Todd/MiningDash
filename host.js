@@ -234,10 +234,11 @@ const dailyJob = schedule.scheduleJob('5 */24 * * *', (firetime) => {
     let [c, a, m, r] = [0,0,0,0];
     for (let i = 0; i < db.shares_buffer.length; i++) {
         const element = db.shares_buffer[i];
-        sum += element.rig;
+        r += element.rig;
         c += element.callum;
         m += element.mark;
         a += element.andras;
+        sum += (r+c+m+a);
     }
     
     db.shares_history.push({

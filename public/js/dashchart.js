@@ -42,42 +42,42 @@ fetch("db.json")
             }]
         },
     });
-    var ctx = document.getElementById('historyChart');
-    var histChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: points,
-            datasets: [{
-                label: 'Effective Hashrate',
-                data: data.hash_history,
-                backgroundColor: [
-                    'rgba(255, 165, 0, 0.4)'
-                ],
-                borderColor: [
-                    'rgba(255, 165, 0, 1)'
-                ],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    display: false,
-                    scaleLabel: {
-                        display: false,
-                        labelString: '5 Mins'
-                    }
-                }],
-                yAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'MH/s'
-                    }
-                }]
-            }
-        }
-    });
+    // var ctx = document.getElementById('historyChart');
+    // var histChart = new Chart(ctx, {
+    //     type: 'line',
+    //     data: {
+    //         labels: points,
+    //         datasets: [{
+    //             label: 'Effective Hashrate',
+    //             data: data.hash_history,
+    //             backgroundColor: [
+    //                 'rgba(255, 165, 0, 0.4)'
+    //             ],
+    //             borderColor: [
+    //                 'rgba(255, 165, 0, 1)'
+    //             ],
+    //             borderWidth: 2
+    //         }]
+    //     },
+    //     options: {
+    //         scales: {
+    //             xAxes: [{
+    //                 display: false,
+    //                 scaleLabel: {
+    //                     display: false,
+    //                     labelString: '5 Mins'
+    //                 }
+    //             }],
+    //             yAxes: [{
+    //                 display: true,
+    //                 scaleLabel: {
+    //                     display: true,
+    //                     labelString: 'MH/s'
+    //                 }
+    //             }]
+    //         }
+    //     }
+    // });
     // var ctx = document.getElementById('luckChart');
     // var luckChart = new Chart(ctx, {
     //     type: 'line',

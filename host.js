@@ -143,6 +143,9 @@ app.listen(port);
 
 setTimeout(() => {  
     // console.log(db.workers);
+    console.log(db.poolbalance);
+    console.log(db.price);
+    console.log(db.hashrate);
     console.table(db.shares_buffer);
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)

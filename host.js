@@ -118,6 +118,10 @@ app.get('/clearwallet', function(req, res, next){
     save();
     res.sendFile(path.join(__dirname + '/public/index.html'));
 }); 
+app.get('/save', function(req, res, next){
+    save();
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+}); 
 app.get('/payments', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/payed.html'));
 });

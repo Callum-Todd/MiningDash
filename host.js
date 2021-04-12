@@ -138,7 +138,7 @@ app.post('/submitpayment', (req, res) => {
 
 // ------------------------------------------------------------>
 // Main
-console.log("Listening at http://localhost:" + port.toString());
+console.log("Listening at http://localhost:" + port.toString() + "\n");
 app.listen(port);
 
 setTimeout(() => {  

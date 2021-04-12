@@ -80,7 +80,7 @@ function update() {
     //         })
     //     })
 
-    if (db.hash_history.length >= 50) {
+    if (db.hash_history.length >= 20) {
         db.hash_history.shift();
     }
     if (db.hash_history[db.hash_history.length] == db.hashrate/100000) {

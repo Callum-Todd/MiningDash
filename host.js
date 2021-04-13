@@ -177,7 +177,7 @@ setInterval(() => {
     console.log("Shares mined today:  " + sum);
     console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(7));
     save();
-}, 180000);
+}, 600000);
 
 const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
     let [c, a, m, r] = [0,0,0,0];

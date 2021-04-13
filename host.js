@@ -163,7 +163,7 @@ setTimeout(() => {
 
 setInterval(() => { 
     update();
-    console.log("(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
+    console.log("\n(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
     console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(7) + " Ether");
     console.log("Price: " + db.price + " gbp");
     console.log("Hash:  " + db.hashrate/1000000 + " mH/s");

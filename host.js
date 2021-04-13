@@ -163,11 +163,11 @@ setTimeout(() => {
 
 setInterval(() => { 
     update();
-    console.log("_- ̅-_- ̅-_- ̅-_- ̅-_- ̅-_- ̅-_- ̅-_- ̅-_- ̅-_- ̅-_- ̅-_- ̅-_");
+    console.log("(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
     console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(7) + " Ether");
     console.log("Price: " + db.price + " gbp");
     console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
-    console.table(db.shares_buffer);
+    // console.table(db.shares_buffer);
     let sum = 0;
     db.shares_buffer.forEach(element => {
         sum += element.rig;
@@ -213,6 +213,7 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
         "mark" : m,
         "callum" : c
     })
+    console.table(db.shares_buffer);
 
 });
 

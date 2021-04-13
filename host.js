@@ -238,7 +238,10 @@ const dailyJob = schedule.scheduleJob('5 */24 * * *', (firetime) => {
         c += element.callum;
         m += element.mark;
         a += element.andras;
-        sum += (r+c+m+a);
+        sum += element.rig;
+        sum += element.callum;
+        sum += element.mark;
+        sum += element.andras;
     }
     
     db.shares_history.push({

@@ -143,7 +143,7 @@ app.listen(port);
 
 setTimeout(() => {  
     // console.log(db.workers);
-    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(5) + " Ether");
+    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(7) + " Ether");
     console.log("Price: " + db.price + " gbp");
     console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
     let sum = 0;

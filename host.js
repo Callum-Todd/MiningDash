@@ -5,13 +5,59 @@ var fetch = require('cross-fetch');
 var path = require('path');
 var schedule = require('node-schedule');
 var date = require('date-and-time');
-var port = 8080;
+var port = 3000;
 
+var minPayout = 50000000000000000;
+
+function estimatePayout() {
+    let diff = minPayout - db.poolbalance;
+    const rewards = db.rewards.reverse();
+    let sum = 0;
+    for (let i = 0; i < rewards.length; i++) {
+        const ele = rewards[i];
+        sum += ele.amount;
+        if (sum >= diff) {
+            return i;
+        }
+    }
+    return null;
+}
+
+function printer(opt) {
+    if (opt == (false || null)) {
+        console.log("\n(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
+    }
+    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(7) + " Ether");
+    console.log("Price: " + db.price + " gbp");
+    console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
+    let sum = 0;
+    db.shares_buffer.forEach(element => {
+        sum += element.rig;
+        sum += element.andras;
+        sum += element.callum;
+        sum += element.mark;
+    });
+    console.log("Shares mined today:  " + sum);
+    console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(7));
+    if (estimatePayout() == 0) {
+        console.log("Expecting payout today!");
+    } else if (estimatePayout() == 1){
+        console.log("1 day until payout");
+    } else {
+        console.log(estimatePayout() + " days till payout");
+    }
+    if (opt == true) {
+        console.table(db.shares_buffer);
+    }
+}
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({
     extended: true
   }))
+
+
+
 
 // ------------------------------------------------------------>
 // Storage
@@ -120,45 +166,19 @@ app.post('/submitpayment', (req, res) => {
 // Main
 console.log("Listening at http://localhost:" + port.toString() + "\n");
 app.listen(port);
-
+// Wait to ensure all calls are returned
 setTimeout(() => {  
-    // console.log(db.workers);
-    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(7) + " Ether");
-    console.log("Price: " + db.price + " gbp");
-    console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
-    let sum = 0;
-    db.shares_buffer.forEach(element => {
-        sum += element.rig;
-        sum += element.andras;
-        sum += element.callum;
-        sum += element.mark;
-    });
-    console.log("Shares mined today:  " + sum);
-    console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(7));
-    console.table(db.shares_buffer);
+    printer(true);
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })
 }, 5000);
 
-setInterval(() => { 
+const logging = schedule.scheduleJob('*/10 * * * *', firetime => {
     update();
-    console.log("\n(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
-    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(7) + " Ether");
-    console.log("Price: " + db.price + " gbp");
-    console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
-    // console.table(db.shares_buffer);
-    let sum = 0;
-    db.shares_buffer.forEach(element => {
-        sum += element.rig;
-        sum += element.andras;
-        sum += element.callum;
-        sum += element.mark;
-    });
-    console.log("Shares mined today:  " + sum);
-    console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(7));
+    printer();
     save();
-}, 600000);
+})
 
 const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
     let [c, a, m, r] = [0,0,0,0];

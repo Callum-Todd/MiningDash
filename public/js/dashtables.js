@@ -2,9 +2,6 @@ fetch("db.json")
 .then(response => response.json())
 .then(data => {
 
-    // document.getElementById('ticker').innerHTML = "£" + ((data.walletbalance/1000000000000000000) * data.price).toFixed(2);
-
-
     const pTable = document.getElementById('paymentstable');
     const wTable = document.getElementById('workertable');
     const wdTable = document.getElementById('workhisttable');
@@ -65,5 +62,4 @@ fetch("db.json")
         markT.innerHTML = item.mark;
         Total.innerHTML = item.total;
     }
-
 })

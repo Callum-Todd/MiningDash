@@ -27,11 +27,11 @@ function update() {
     .then(pricedata => {
         db.price = pricedata.GBP;
     })
-    // fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/workers")
-    // .then(response => response.json())
-    // .then(workerData => {
-    //     db.workers = workerData.result.data[0];
-    // })
+    .catch(log => {
+        console.warn("API Call to fetch price failed!");
+        console.log(log);
+    })
+   
     fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/dashboard")
         .then(response => response.json())
         .then(dashboardData => {
@@ -41,31 +41,12 @@ function update() {
             db.valid = dashboardData.data.currentStatistics.validShares;
             db.stale = dashboardData.data.currentStatistics.staleShares;
     })
-    save();
-
+        .catch(log => {
+            console.warn("API Call to pool data failed!");
+            console.log(log);
+        })
         
-    // fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/payouts")
-    //     .then(response =>response.json())
-    //     .then(payoutData => {
-    //         // if (data.result.data == null) {
-    //         //     return;
-    //         // }
-    //         payoutData.result.data.forEach(item => {
-    //             let found = false;
-    //             db.payments.forEach(ele => {
-    //                 if (item.txHash == ele.amount) {
-    //                     found = true;
-    //                 }
-    //             })
-    //             if (!found) {
-    //                 let now = new Date();
-    //                 db.payments.push({  "amount" : item.amount,
-    //                                     "price" : db.price,
-    //                                     "date" : date.format(now, 'DD/MM/YYYY'),
-    //                                     "txid" : item.txHash})
-    //             }
-    //         })
-    //     })
+    save();
 
     if (db.hash_history.length >= 20) {
         db.hash_history.shift();

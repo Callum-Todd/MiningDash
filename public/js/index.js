@@ -2,10 +2,10 @@ fetch("db.json")
 .then(response => response.json())
 .then(data => {
 
-    const rTable = document.getElementById('rewardstable');
+    // const rTable = document.getElementById('rewardstable');
     const pTable = document.getElementById('paymentstable');
     const wTable = document.getElementById('workertable');
-    const wdTable = document.getElementById('workhisttable');
+    // const wdTable = document.getElementById('workhisttable');
 
     for (let index = data.rewards.length - 1; index >= 0; index--) {
         const item = data.rewards[index];
@@ -17,7 +17,7 @@ fetch("db.json")
         let value = row.insertCell(2);
         value.innerHTML = (item.amount/1000000000000000000 * item.price).toFixed(2);
         let price = row.insertCell(3);
-        price.innerHTML = item.price;
+        price.innerHTML = item.price.toFixed(2);
         price.textContent = (+price.textContent).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
         value.textContent = (+value.textContent).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
     }
@@ -42,7 +42,6 @@ fetch("db.json")
     data.workers.forEach(item =>{ 
         sum += item.validShares;
     })
-    console.log(sum);
 
     for (let index = data.workers.length - 1; index >= 0; index--) {
         const item = data.workers[index];
@@ -51,12 +50,10 @@ fetch("db.json")
         let valid = row.insertCell(1);
         let stale = row.insertCell(2);
         let share = row.insertCell(3);
-        // let online = row.insertCell(4);
 
         name.innerHTML = item.worker;
         valid.innerHTML = item.validShares;
         stale.innerHTML = item.staleShares;
-        // online.innerHTML = item.online;
         share.innerHTML = ((item.validShares / sum) * 100 ).toFixed(2) + '%' ;
         
     }

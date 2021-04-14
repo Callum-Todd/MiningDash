@@ -11,7 +11,8 @@ var minPayout = 50000000000000000;
 
 function estimatePayout() {
     let diff = minPayout - db.poolbalance;
-    const rewards = db.rewards.reverse();
+    const rewards = db.rewards;
+    rewards.reverse();
     let sum = 0;
     for (let i = 0; i < rewards.length; i++) {
         const ele = rewards[i];
@@ -56,9 +57,6 @@ app.use(express.urlencoded({
     extended: true
   }))
 
-
-
-
 // ------------------------------------------------------------>
 // Storage
 var db = jsonfile.readFileSync('./public/db.json');
@@ -89,19 +87,18 @@ function update() {
     })
         .catch(log => {
             console.warn("API Call to pool data failed!");
-            console.log(log);
+            // console.log(log);
         })
 
-    save();
-
-    if (db.hash_history.length >= 20) {
-        db.hash_history.shift();
-    }
-    if (db.hash_history[db.hash_history.length] == db.hashrate/100000) {
         
-    } else {
-        db.hash_history.push(db.hashrate/1000000);
-    }
+        if (db.hash_history.length >= 20) {
+            db.hash_history.shift();
+        }
+        if (db.hash_history[db.hash_history.length] == db.hashrate/100000) {
+            
+        } else {
+            db.hash_history.push(db.hashrate/1000000);
+        }
 }
 
 update();    
@@ -166,6 +163,7 @@ app.post('/submitpayment', (req, res) => {
 // Main
 console.log("Listening at http://localhost:" + port.toString() + "\n");
 app.listen(port);
+
 // Wait to ensure all calls are returned
 setTimeout(() => {  
     printer(true);
@@ -212,7 +210,7 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
 });
 
 // Daily Job executed at midnight
-const dailyJob = schedule.scheduleJob('5 */24 * * *', (firetime) => {
+const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
     update();
     console.log("Daily job ran @" + firetime);
 

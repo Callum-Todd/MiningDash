@@ -181,9 +181,6 @@ setInterval(() => {
 
 const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
     let [c, a, m, r] = [0,0,0,0];
-    // fetch('https://api.ethermine.org//miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/workers')
-    // .then(response => response.json())
-    // .then(respData => {
         db.workers.forEach(element => {
             switch (element.worker) {
                 case "battlemoira":
@@ -204,8 +201,6 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
             }
 
         });
-
-
     db.shares_buffer.push({
         "rig" : r,
         "andras" : a,
@@ -213,23 +208,24 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
         "callum" : c
     })
     console.table(db.shares_buffer);
-
 });
 
 // Daily Job executed at midnight
 const dailyJob = schedule.scheduleJob('5 */24 * * *', (firetime) => {
     update();
     console.log("Daily job ran @" + firetime);
+
     let diff;
     if (db.poolbalance < db.dailybalance) {
         diff = (0.1 - db.dailybalance/1000000000000000000) + db.poolbalance;
     } else {
         diff = db.poolbalance - db.dailybalance;
     }
+
     let now = new Date();
     db.rewards.push({"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
     db.dailybalance = db.poolbalance;
-    
+
     let sum = 0;
     let [c, a, m, r] = [0,0,0,0];
     for (let i = 0; i < db.shares_buffer.length; i++) {
@@ -242,6 +238,7 @@ const dailyJob = schedule.scheduleJob('5 */24 * * *', (firetime) => {
         sum += element.callum;
         sum += element.mark;
         sum += element.andras;
+        // Fix this god awful mess :)
     }
     
     db.shares_history.push({

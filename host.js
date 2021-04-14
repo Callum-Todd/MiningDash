@@ -29,7 +29,7 @@ function update() {
     })
     .catch(log => {
         console.warn("API Call to fetch price failed!");
-        console.log(log);
+        // console.log(log);
     })
    
     fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/dashboard")
@@ -45,7 +45,7 @@ function update() {
             console.warn("API Call to pool data failed!");
             console.log(log);
         })
-        
+
     save();
 
     if (db.hash_history.length >= 20) {

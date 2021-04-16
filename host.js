@@ -5,7 +5,17 @@ var fetch = require('cross-fetch');
 var path = require('path');
 var schedule = require('node-schedule');
 var date = require('date-and-time');
+const Discord = require("discord.js");
+const config = require("./config.json");
 var port = 3000;
+var messageTrigger = false;
+var botChannel;// = client.channels.cache.get('832391997956161598');
+const client = new Discord.Client();
+client.login(config.BOT_TOKEN);
+client.once('ready', () => {
+    botChannel = client.channels.cache.get('832391997956161598');
+});
+botChannel = client.channels.cache.get('832391997956161598');
 
 var minPayout = 50000000000000000;
 
@@ -60,12 +70,13 @@ app.use(express.urlencoded({
 // ------------------------------------------------------------>
 // Storage
 var db = jsonfile.readFileSync('./public/db.json');
+
 function save() {
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })
 }
-function update() {
+function update(bot) {
     fetch("https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=GBP")
     .then(response => response.json())
     .then(pricedata => {
@@ -91,17 +102,22 @@ function update() {
         })
 
         
-        if (db.hash_history.length >= 20) {
-            db.hash_history.shift();
-        }
-        if (db.hash_history[db.hash_history.length] == db.hashrate/100000) {
-            
-        } else {
-            db.hash_history.push(db.hashrate/1000000);
-        }
+    if (db.hash_history.length >= 20) {
+        db.hash_history.shift();
+    }
+    if (db.hash_history[db.hash_history.length] == db.hashrate/100000) {
+        
+    } else {
+        db.hash_history.push(db.hashrate/1000000);
+    }
+
+    if (db.hashrate < 100 && messageTrigger == false) {
+        bot.send("@here Moira is down! 😢")
+    }
+        
 }
 
-update();    
+  
 
 // ------------------------------------------------------------>
 // Routing
@@ -138,6 +154,7 @@ app.get('/payments', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/payed.html'));
 });
 
+
 app.post('/submitpayment', (req, res) => {
     const amount = req.body.amount_field;
     const price = req.body.price_field;
@@ -164,8 +181,13 @@ app.post('/submitpayment', (req, res) => {
 console.log("Listening at http://localhost:" + port.toString() + "\n");
 app.listen(port);
 
+
+
+
+
 // Wait to ensure all calls are returned
-setTimeout(() => {  
+setTimeout(() => { 
+    update(botChannel); 
     printer(true);
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
@@ -173,7 +195,7 @@ setTimeout(() => {
 }, 5000);
 
 const logging = schedule.scheduleJob('*/10 * * * *', firetime => {
-    update();
+    update(botChannel);
     printer();
     save();
 })
@@ -211,7 +233,7 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
 
 // Daily Job executed at midnight
 const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
-    update();
+    update(botChannel);
     console.log("Daily job ran @" + firetime);
 
     let diff;

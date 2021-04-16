@@ -229,6 +229,9 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
         "callum" : c
     })
     console.table(db.shares_buffer);
+    if (messageTrigger == true && db.hashrate > 140) {
+        messageTrigger = false;
+    }
 });
 
 // Daily Job executed at midnight

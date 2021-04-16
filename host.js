@@ -143,7 +143,7 @@ function update(bot) {
         db.hash_history.push(db.hashrate/1000000);
     }
 
-    if (db.hashrate < 160 && messageTrigger == false) {
+    if (db.hashrate < 170 && messageTrigger == false) {
         bot.send("@here Moira is down! 😢")
     }
         

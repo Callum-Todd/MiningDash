@@ -9,13 +9,15 @@ const Discord = require("discord.js");
 const config = require("./config.json");
 var port = 3000;
 var messageTrigger = false;
-var botChannel;// = client.channels.cache.get('832391997956161598');
+var generalChan;
+var logsChan;
 const client = new Discord.Client();
 client.login(config.BOT_TOKEN);
 client.once('ready', () => {
-    botChannel = client.channels.cache.get('832391997956161598');
+    generalChan = client.channels.cache.get('832391997956161598');
+    logsChan = client.channels.cache.get('832590219009720331')
 });
-// botChannel = client.channels.cache.get('832391997956161598');
+
 
 var minPayout = 50000000000000000;
 // db Interactions
@@ -62,7 +64,7 @@ function printer(opt) {
         console.log("\n(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
     }
     console.log("Pool:  " + (currentPoolBalance()/1000000000000000000).toFixed(7) + " Ether");
-    console.log("Price: " + currentPrice() + " gbp");
+    console.log("Price: £" + currentPrice());
     console.log("Hash:  " + currentHash() + " mH/s");
     console.log("Shares mined today:  " + currentShares());
     console.log("Eth mined today:     " + (currentMined()/1000000000000000000).toFixed(7));
@@ -214,7 +216,7 @@ app.listen(port);
 
 // Wait to ensure all calls are returned
 setTimeout(() => { 
-    update(botChannel); 
+    update(generalChan); 
     printer(true);
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
@@ -222,7 +224,7 @@ setTimeout(() => {
 }, 5000);
 
 const logging = schedule.scheduleJob('*/10 * * * *', firetime => {
-    update(botChannel);
+    update(generalChan);
     printer();
     save();
 })
@@ -259,15 +261,13 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
     if (messageTrigger == true && db.hashrate > 140) {
         messageTrigger = false;
     }
+    sendBotUpdate(logsChan);
 });
 
-const botJob = schedule.scheduleJob('30 21 * * *', () => {
-    sendBotUpdate(botChannel);
-})
 
 // Daily Job executed at midnight
 const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
-    update(botChannel);
+    update(generalChan);
     console.log("Daily job ran @" + firetime);
 
     let diff = currentMined();
@@ -300,6 +300,6 @@ const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
         "total" : sum
     })
     db.shares_buffer.length = 0;
-    sendBotUpdate(botChannel);   
+    sendBotUpdate(generalChan);   
     save();
 })

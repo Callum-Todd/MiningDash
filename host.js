@@ -19,7 +19,7 @@ client.once('ready', () => {
 
 var db = jsonfile.readFileSync('./public/db.json');
 
-var port = 3000;
+var port = 8080;
 var messageTrigger = false;
 var minPayout = 50000000000000000;
 

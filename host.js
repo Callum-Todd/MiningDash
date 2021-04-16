@@ -90,6 +90,7 @@ function sendBotUpdate(bot) {
                     "\nTotal shares: " + currentShares() +
                     "\nValue earned: £" + ((currentMined()/1000000000000000000)*db.price).toFixed(2) +
                     "\nPrice of Ether: £" + currentPrice() + 
+                    "\nPool balance: " + currentPoolBalance() +
                     "\nEstimated days till next payout: " + estimatePayout();
                                 
     bot.send(botString);
@@ -143,7 +144,7 @@ function update(bot) {
         db.hash_history.push(db.hashrate/1000000);
     }
 
-    if (db.hashrate < 170 && messageTrigger == false) {
+    if (db.hashrate < 180 && messageTrigger == false) {
         bot.send("@here Moira is down! 😢")
     }
         

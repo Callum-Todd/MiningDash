@@ -18,7 +18,7 @@ client.once('ready', () => {
 // botChannel = client.channels.cache.get('832391997956161598');
 
 var minPayout = 50000000000000000;
-
+// db Interactions
 function estimatePayout() {
     let diff = minPayout - db.poolbalance;
     const rewards = Object.create(db.rewards);
@@ -56,7 +56,7 @@ function currentMined() {
     return diff;
 }
 
-
+// User Interations
 function printer(opt) {
     if (opt == (false || null)) {
         console.log("\n(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
@@ -66,7 +66,7 @@ function printer(opt) {
     console.log("Hash:  " + currentHash() + " mH/s");
     console.log("Shares mined today:  " + currentShares());
     console.log("Eth mined today:     " + (currentMined()/1000000000000000000).toFixed(7));
-    console.log("Value earned: " + ((currentMined()/1000000000000000000)*db.price).toFixed(2));
+    console.log("Value earned: £" + ((currentMined()/1000000000000000000)*db.price).toFixed(2));
     if (estimatePayout() == 0) {
         console.log("Expecting payout very soon!");
     } else if (estimatePayout() == 1){
@@ -78,7 +78,6 @@ function printer(opt) {
         console.table(db.shares_buffer);
     }
 }
-
 
 function sendBotUpdate(bot) {
     var botString = "Ether mined: " + (currentMined()/1000000000000000000).toFixed(6) + 

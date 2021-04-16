@@ -15,7 +15,7 @@ client.login(config.BOT_TOKEN);
 client.once('ready', () => {
     botChannel = client.channels.cache.get('832391997956161598');
 });
-botChannel = client.channels.cache.get('832391997956161598');
+// botChannel = client.channels.cache.get('832391997956161598');
 
 var minPayout = 50000000000000000;
 
@@ -33,14 +33,7 @@ function estimatePayout() {
     }
     return null;
 }
-
-function printer(opt) {
-    if (opt == (false || null)) {
-        console.log("\n(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
-    }
-    console.log("Pool:  " + (db.poolbalance/1000000000000000000).toFixed(7) + " Ether");
-    console.log("Price: " + db.price + " gbp");
-    console.log("Hash:  " + db.hashrate/1000000 + " mH/s");
+function currentShares() {
     let sum = 0;
     db.shares_buffer.forEach(element => {
         sum += element.rig;
@@ -48,10 +41,34 @@ function printer(opt) {
         sum += element.callum;
         sum += element.mark;
     });
-    console.log("Shares mined today:  " + sum);
-    console.log("Eth mined today:     " + ((db.poolbalance - db.dailybalance)/1000000000000000000).toFixed(7));
+    return sum;
+}
+function currentHash() {return  db.hashrate/1000000;}
+function currentPrice() {return db.price;}
+function currentPoolBalance() {return db.poolbalance}
+function currentMined() {
+    let diff;
+    if (db.poolbalance < db.dailybalance) {
+        diff = (minPayout - db.dailybalance) + db.poolbalance;
+    } else {
+        diff = db.poolbalance - db.dailybalance;
+    }
+    return diff;
+}
+
+
+function printer(opt) {
+    if (opt == (false || null)) {
+        console.log("\n(¯`·._.·(¯`·._.· Update! ·._.·´¯)·._.·´¯)");
+    }
+    console.log("Pool:  " + (currentPoolBalance()/1000000000000000000).toFixed(7) + " Ether");
+    console.log("Price: " + currentPrice() + " gbp");
+    console.log("Hash:  " + currentHash() + " mH/s");
+    console.log("Shares mined today:  " + currentShares());
+    console.log("Eth mined today:     " + (currentMined()/1000000000000000000).toFixed(7));
+    console.log("Value earned: " + ((currentMined()/1000000000000000000)*db.price).toFixed(2));
     if (estimatePayout() == 0) {
-        console.log("Expecting payout today!");
+        console.log("Expecting payout very soon!");
     } else if (estimatePayout() == 1){
         console.log("1 day until payout");
     } else {
@@ -60,6 +77,17 @@ function printer(opt) {
     if (opt == true) {
         console.table(db.shares_buffer);
     }
+}
+
+
+function sendBotUpdate(bot) {
+    var botString = "Ether mined: " + (currentMined()/1000000000000000000).toFixed(6) + 
+                    "\nTotal shares: " + currentShares() +
+                    "\nValue earned: £" + ((currentMined()/1000000000000000000)*db.price).toFixed(2) +
+                    "\nPrice of Ether: £" + currentPrice() + 
+                    "\nEstimated days till next payout: " + estimatePayout();
+                                
+    bot.send(botString);
 }
 
 app.use(express.static(__dirname + '/public'));
@@ -234,17 +262,16 @@ const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
     }
 });
 
+const botJob = schedule.scheduleJob('30 21 * * *', () => {
+    sendBotUpdate(botChannel);
+})
+
 // Daily Job executed at midnight
 const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
     update(botChannel);
     console.log("Daily job ran @" + firetime);
 
-    let diff;
-    if (db.poolbalance < db.dailybalance) {
-        diff = (minPayout - db.dailybalance) + db.poolbalance;
-    } else {
-        diff = db.poolbalance - db.dailybalance;
-    }
+    let diff = currentMined();
 
     let now = new Date();
     db.rewards.push({"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
@@ -274,9 +301,6 @@ const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
         "total" : sum
     })
     db.shares_buffer.length = 0;
-    var botString = new String("Ether mined today: " + (diff/1000000000000000000).toFixed(7) + 
-                                "\nPrice of Ether: " + db.price + 
-                                "\nValue earned: " + ((diff/1000000000000000000)*db.price).toFixed(2));
-    botChannel.send(botString);
+    sendBotUpdate(botChannel);   
     save();
 })

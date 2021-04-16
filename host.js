@@ -241,7 +241,7 @@ const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
 
     let diff;
     if (db.poolbalance < db.dailybalance) {
-        diff = (0.1 - db.dailybalance/1000000000000000000) + db.poolbalance;
+        diff = (minPayout - db.dailybalance) + db.poolbalance;
     } else {
         diff = db.poolbalance - db.dailybalance;
     }
@@ -274,5 +274,9 @@ const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
         "total" : sum
     })
     db.shares_buffer.length = 0;
+    var botString = new String("Ether mined today: " + (diff/1000000000000000000).toFixed(7) + 
+                                "\nPrice of Ether: " + db.price + 
+                                "\nValue earned: " + ((diff/1000000000000000000)*db.price).toFixed(2));
+    botChannel.send(botString);
     save();
 })

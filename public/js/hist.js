@@ -5,8 +5,8 @@ fetch("db.json")
     const rTable = document.getElementById('rewardstable');
     const pTable = document.getElementById('paymentstable');
     const wdTable = document.getElementById('workhisttable');
-
-    for (let index = data.rewards.length - 1; index >= 0; index--) {
+    
+    for (let index = 0; index < data.rewards.length; index++) {
         const item = data.rewards[index];
         let row = rTable.insertRow();
         let date = row.insertCell(0);

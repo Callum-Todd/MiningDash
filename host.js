@@ -21,7 +21,7 @@ var minPayout = 50000000000000000;
 
 function estimatePayout() {
     let diff = minPayout - db.poolbalance;
-    const rewards = db.rewards;
+    const rewards = Object.create(db.rewards);
     rewards.reverse();
     let sum = 0;
     for (let i = 0; i < rewards.length; i++) {

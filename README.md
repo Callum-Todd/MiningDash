@@ -1,8 +1,9 @@
-# Battle Moira
-A backend service and website for tracking a group mining project.
+# MiningDash
+A simple web service for keeping track of a group mining rig.
 
 Features:
 - Automated recording of daily returns and payments
+- Basic income / cost projections
 
 Intended Features:
 - Notifactions (Discord?)

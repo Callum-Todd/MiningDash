@@ -90,7 +90,7 @@ function sendBotUpdate(bot) {
                     "\nDaily shares: " + currentShares() +
                     "\nValue earned: £" + ((currentMined()/1000000000000000000)*db.price).toFixed(2) +
                     "\nPrice of Ether: £" + currentPrice() + 
-                    "\nPool balance: " + currentPoolBalance() +
+                    "\nPool balance: " + (currentPoolBalance()/1000000000000000000).toFixed(6) +
                     "\nEstimated days till next payout: " + estimatePayout();
                                 
     bot.send(botString);

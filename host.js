@@ -87,7 +87,7 @@ function printer(opt) {
 function sendBotUpdate(bot) {
     var botString = "Ether mined: " + (currentMined()/1000000000000000000).toFixed(6) + 
                     "\nHourly shares: " + db.valid +
-                    "\nTotal shares: " + currentShares() +
+                    "\nDaily shares: " + currentShares() +
                     "\nValue earned: £" + ((currentMined()/1000000000000000000)*db.price).toFixed(2) +
                     "\nPrice of Ether: £" + currentPrice() + 
                     "\nPool balance: " + currentPoolBalance() +

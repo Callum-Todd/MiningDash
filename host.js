@@ -7,8 +7,7 @@ var schedule = require('node-schedule');
 var date = require('date-and-time');
 const Discord = require("discord.js");
 const config = require("./config.json");
-var port = 3000;
-var messageTrigger = false;
+
 var generalChan;
 var logsChan;
 const client = new Discord.Client();
@@ -18,8 +17,12 @@ client.once('ready', () => {
     logsChan = client.channels.cache.get('832590219009720331')
 });
 
+var db = jsonfile.readFileSync('./public/db.json');
 
+var port = 3000;
+var messageTrigger = false;
 var minPayout = 50000000000000000;
+
 // db Interactions
 function estimatePayout() {
     let diff = minPayout - db.poolbalance;
@@ -99,7 +102,6 @@ app.use(express.urlencoded({
 
 // ------------------------------------------------------------>
 // Storage
-var db = jsonfile.readFileSync('./public/db.json');
 
 function save() {
     jsonfile.writeFile('./public/db.json', db, function (err) {
@@ -141,7 +143,7 @@ function update(bot) {
         db.hash_history.push(db.hashrate/1000000);
     }
 
-    if (db.hashrate < 100 && messageTrigger == false) {
+    if (db.hashrate < 160 && messageTrigger == false) {
         bot.send("@here Moira is down! 😢")
     }
         

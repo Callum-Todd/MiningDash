@@ -19,7 +19,7 @@ client.once('ready', () => {
 
 var db = jsonfile.readFileSync('./public/db.json');
 
-var port = 8080;
+var port = 3000;
 var messageTrigger = false;
 var minPayout = 50000000000000000;
 
@@ -119,20 +119,52 @@ function update(bot) {
         console.warn("API Call to fetch price failed!");
         // console.log(log);
     })
-   
-    fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/dashboard")
+   fetch("https://flexpool.io/api/v1/miner/0xd1c6ddd842180cd54eee389aa1302bcaf55fa44a/stats")
         .then(response => response.json())
-        .then(dashboardData => {
-            db.hashrate = dashboardData.data.currentStatistics.reportedHashrate;
-            db.poolbalance = dashboardData.data.currentStatistics.unpaid;
-            db.workers = dashboardData.data.workers;
-            db.valid = dashboardData.data.currentStatistics.validShares;
-            db.stale = dashboardData.data.currentStatistics.staleShares;
-    })
+        .then(data => {
+            db.hashrate = data.result.current.reported_hashrate;
+            db.valid = data.daily.validhares;
+            db.stale = data.daily.stalehares;
+        })
         .catch(log => {
             console.warn("API Call to pool data failed!");
             // console.log(log);
         })
+   fetch("https://flexpool.io/api/v1/miner/0xd1c6ddd842180cd54eee389aa1302bcaf55fa44a/balance")
+        .then(response => response.json())
+        .then(data => {
+            db.poolbalance = data.result;
+        })
+        .catch(log => {
+            console.warn("API Call to pool data failed!");
+            // console.log(log);
+        })
+   fetch("https://flexpool.io/api/v1/miner/0xd1c6ddd842180cd54eee389aa1302bcaf55fa44a/balance")
+        .then(response => response.json())
+        .then(data => {
+            db.workers = data.result;
+        })
+        .catch(log => {
+            console.warn("API Call to pool data failed!");
+            // console.log(log);
+        })
+
+
+
+        // fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/dashboard")
+    //     .then(response => response.json())
+    //     .then(dashboardData => {
+    //         db.hashrate = dashboardData.data.currentStatistics.reportedHashrate;
+    //         db.poolbalance = dashboardData.data.currentStatistics.unpaid;
+    //         db.workers = dashboardData.data.workers;
+    //         db.valid = dashboardData.data.currentStatistics.validShares;
+    //         db.stale = dashboardData.data.currentStatistics.staleShares;
+    // })
+    //     .catch(log => {
+    //         console.warn("API Call to pool data failed!");
+    //         // console.log(log);
+    //     })
+
 
         
     if (db.hash_history.length >= 20) {
@@ -234,40 +266,46 @@ const logging = schedule.scheduleJob('*/10 * * * *', firetime => {
     save();
 })
 
-const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
-    let [c, a, m, r] = [0,0,0,0];
-        db.workers.forEach(element => {
-            switch (element.worker) {
-                case "battlemoira":
-                    r = element.validShares;
-                    break;
-                case "junkrat":
-                    c = element.validShares;
-                    break;
-                case "torbjon":
-                    a = element.validShares;
-                    break;
-                case "markminer":
-                    m = element.validShares;
-                    break;
+// const sharesUpdate = schedule.scheduleJob('0 * * * *', (firetime) => {
+//     let [c, a, m, r] = [0,0,0,0];
+//         db.workers.forEach(element => {
+//             switch (element.worker) {
+//                 case "battlemoira":
+//                     r = element.validShares;
+//                     break;
+//                 case "junkrat":
+//                     c = element.validShares;
+//                     break;
+//                 case "torbjon":
+//                     a = element.validShares;
+//                     break;
+//                 case "markminer":
+//                     m = element.validShares;
+//                     break;
             
-                default:
-                    break;
-            }
+//                 default:
+//                     break;
+//             }
 
-        });
-    db.shares_buffer.push({
-        "rig" : r,
-        "andras" : a,
-        "mark" : m,
-        "callum" : c
-    })
-    console.table(db.shares_buffer);
-    if (messageTrigger == true && db.hashrate > 190) {
-        messageTrigger = false;
+//         });
+//     db.shares_buffer.push({
+//         "rig" : r,
+//         "andras" : a,
+//         "mark" : m,
+//         "callum" : c
+//     })
+//     console.table(db.shares_buffer);
+//     if (messageTrigger == true && db.hashrate > 190) {
+//         messageTrigger = false;
+//     }
+//     sendBotUpdate(logsChan);
+// });
+
+const triggerFix = schedule.scheduleJob('0 * * * *', () => {
+    if (db.hashrate > 190 && messageTrigger == true ) {
+        messageTrigger= false;
     }
-    sendBotUpdate(logsChan);
-});
+})
 
 
 // Daily Job executed at midnight

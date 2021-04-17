@@ -321,18 +321,40 @@ const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
 
     let sum = 0;
     let [c, a, m, r] = [0,0,0,0];
-    for (let i = 0; i < db.shares_buffer.length; i++) {
-        const element = db.shares_buffer[i];
-        r += element.rig;
-        c += element.callum;
-        m += element.mark;
-        a += element.andras;
-        sum += element.rig;
-        sum += element.callum;
-        sum += element.mark;
-        sum += element.andras;
-        // Fix this god awful mess :)
-    }
+    // for (let i = 0; i < db.shares_buffer.length; i++) {
+    //     const element = db.shares_buffer[i];
+    //     r += element.rig;
+    //     c += element.callum;
+    //     m += element.mark;
+    //     a += element.andras;
+    //     sum += element.rig;
+    //     sum += element.callum;
+    //     sum += element.mark;
+    //     sum += element.andras;
+    //     // Fix this god awful mess :)
+    // }
+
+    db.workers.forEach(element => {
+        switch (element.workers) {
+            case "BattleMoira":
+                r = element.valid_shares;
+                break;
+
+            case "Junkrat":
+                c = element.valid_shares;
+                break;
+
+            case "Torbjon":
+                a = element.valid_shares;
+                break;
+
+            case "markminer":
+                m = element.valid_shares;
+                break;
+            default:
+                break;
+        }
+    });
     
     db.shares_history.push({
         "date" : date.format(now, 'DD/MM/YYYY'),

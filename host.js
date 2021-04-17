@@ -219,6 +219,10 @@ app.get('/save', function(req, res, next){
 app.get('/payments', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/payed.html'));
 });
+app.get('*', function(req, res, next){
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
+
 
 
 app.post('/submitpayment', (req, res) => {

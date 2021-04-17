@@ -123,8 +123,8 @@ function update(bot) {
         .then(response => response.json())
         .then(data => {
             db.hashrate = data.result.current.reported_hashrate;
-            db.valid = data.daily.validhares;
-            db.stale = data.daily.stalehares;
+            db.valid = data.daily.current.daily.valid_shares;
+            db.stale = data.daily.current.daily.stale_shares;
         })
         .catch(log => {
             console.warn("API Call to shares/hash data failed!");
@@ -258,7 +258,7 @@ app.listen(port);
 // Wait to ensure all calls are returned
 setTimeout(() => { 
     update(generalChan); 
-    printer(true);
+    printer();
     jsonfile.writeFile('./public/db.json', db, function (err) {
         if (err) console.error(err)
     })

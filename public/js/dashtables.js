@@ -4,7 +4,7 @@ fetch("db.json")
 
     const pTable = document.getElementById('paymentstable');
     const wTable = document.getElementById('workertable');
-    const wdTable = document.getElementById('workhisttable');
+    // const wdTable = document.getElementById('workhisttable');
 
 
     for (let index = data.payments.length - 1; index >= 0; index--) {
@@ -46,20 +46,20 @@ fetch("db.json")
         
     }
 
-    for (let index = data.shares_history.length - 1; index >= 0; index--) {
-        const item = data.shares_history[index];
-        let row = wdTable.insertRow();
-        let date = row.insertCell(0);
-        let rigT = row.insertCell(1);
-        let andrasT = row.insertCell(2);
-        let callumT = row.insertCell(3);
-        let markT = row.insertCell(4);
-        let Total = row.insertCell(5);
-        date.innerHTML = item.date;
-        rigT.innerHTML = item.rig;
-        andrasT.innerHTML = item.andras;
-        callumT.innerHTML = item.callum;
-        markT.innerHTML = item.mark;
-        Total.innerHTML = item.total;
-    }
+    // for (let index = data.shares_history.length - 1; index >= 0; index--) {
+    //     const item = data.shares_history[index];
+    //     let row = wdTable.insertRow();
+    //     let date = row.insertCell(0);
+    //     let rigT = row.insertCell(1);
+    //     let andrasT = row.insertCell(2);
+    //     let callumT = row.insertCell(3);
+    //     let markT = row.insertCell(4);
+    //     let Total = row.insertCell(5);
+    //     date.innerHTML = item.date;
+    //     rigT.innerHTML = item.rig;
+    //     andrasT.innerHTML = item.andras;
+    //     callumT.innerHTML = item.callum;
+    //     markT.innerHTML = item.mark;
+    //     Total.innerHTML = item.total;
+    // }
 })

@@ -305,6 +305,5 @@ const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
         "total" : sum
     })
     db.shares_buffer.length = 0;
-    sendBotUpdate(generalChan);   
     save();
 })

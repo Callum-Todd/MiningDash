@@ -352,7 +352,7 @@ const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
                 a = element.valid_shares;
                 break;
 
-            case "markminer":
+            case "Orisa":
                 m = element.valid_shares;
                 break;
             default:

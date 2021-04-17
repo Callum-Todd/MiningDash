@@ -307,7 +307,7 @@ const logging = schedule.scheduleJob('*/10 * * * *', firetime => {
 
 const triggerFix = schedule.scheduleJob('0 * * * *', () => {
     if (db.hashrate > 190 && messageTrigger == true ) {
-        messageTrigger= false;
+        messageTrigger = false;
     }
 })
 

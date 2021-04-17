@@ -127,7 +127,7 @@ function update(bot) {
             db.stale = data.daily.stalehares;
         })
         .catch(log => {
-            console.warn("API Call to pool data failed!");
+            console.warn("API Call to shares/hash data failed!");
             // console.log(log);
         })
    fetch("https://flexpool.io/api/v1/miner/0xd1c6ddd842180cd54eee389aa1302bcaf55fa44a/balance")
@@ -136,16 +136,16 @@ function update(bot) {
             db.poolbalance = data.result;
         })
         .catch(log => {
-            console.warn("API Call to pool data failed!");
+            console.warn("API Call to pool balance data failed!");
             // console.log(log);
         })
-   fetch("https://flexpool.io/api/v1/miner/0xd1c6ddd842180cd54eee389aa1302bcaf55fa44a/balance")
+   fetch("https://flexpool.io/api/v1/miner/0xd1c6ddd842180cd54eee389aa1302bcaf55fa44a/workers")
         .then(response => response.json())
         .then(data => {
             db.workers = data.result;
         })
         .catch(log => {
-            console.warn("API Call to pool data failed!");
+            console.warn("API Call to workers data failed!");
             // console.log(log);
         })
 

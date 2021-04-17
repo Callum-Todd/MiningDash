@@ -1,3 +1,4 @@
+var port = 3000;
 var express = require('express');
 var app = express();
 var jsonfile = require('jsonfile');
@@ -19,7 +20,6 @@ client.once('ready', () => {
 
 var db = jsonfile.readFileSync('./public/db.json');
 
-var port = 3000;
 var messageTrigger = false;
 var minPayout = 50000000000000000;
 
@@ -123,8 +123,8 @@ function update(bot) {
         .then(response => response.json())
         .then(data => {
             db.hashrate = data.result.current.reported_hashrate;
-            db.valid = data.daily.current.daily.valid_shares;
-            db.stale = data.daily.current.daily.stale_shares;
+            db.valid = data.result.daily.valid_shares;
+            db.stale = data.result.daily.daily.stale_shares;
         })
         .catch(log => {
             console.warn("API Call to shares/hash data failed!");

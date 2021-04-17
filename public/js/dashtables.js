@@ -28,11 +28,8 @@ fetch("db.json")
         sum += item.validShares;
     })
     console.log(sum);
-for (let index = 0; index < array.length; index++) {
-    const element = array[index];
-    
-}
-    for (let index = 0; index < data.workers; index++) {
+
+    for (let index = data.workers.length - 1; index >= 0; index--) {
         const item = data.workers[index];
         let row = wTable.insertRow();
         let name = row.insertCell(0);

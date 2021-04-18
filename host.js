@@ -176,7 +176,7 @@ function update(bot) {
         db.hash_history.push(db.hashrate/1000000);
     }
 
-    if (db.hashrate < 190 && messageTrigger == false) {
+    if (db.hashrate < 180 && messageTrigger == false) {
         messageTrigger = true;
         bot.send("@here Moira is down! 😢")
     }
@@ -306,7 +306,7 @@ const logging = schedule.scheduleJob('*/10 * * * *', firetime => {
 // });
 
 const triggerFix = schedule.scheduleJob('0 * * * *', () => {
-    if (db.hashrate > 190 && messageTrigger == true ) {
+    if (db.hashrate > 180 && messageTrigger == true ) {
         messageTrigger= false;
     }
 })

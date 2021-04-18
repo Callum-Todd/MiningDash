@@ -306,16 +306,13 @@ const logging = schedule.scheduleJob('*/10 * * * *', firetime => {
 // });
 
 const triggerFix = schedule.scheduleJob('0 * * * *', () => {
-<<<<<<< HEAD
+
     if (db.hashrate > 180 && messageTrigger == true ) {
         messageTrigger= false;
-=======
-    if (db.hashrate > 190 && messageTrigger == true ) {
-        messageTrigger = false;
->>>>>>> b8ef51b0eab1e68992360cdeb5e8843feae06259
     }
-})
+});
 
+    
 
 // Daily Job executed at midnight
 const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {

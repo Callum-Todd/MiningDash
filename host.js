@@ -124,7 +124,7 @@ function update(bot) {
         .then(data => {
             db.hashrate = data.result.current.reported_hashrate;
             db.valid = data.result.daily.valid_shares;
-            db.stale = data.result.daily.daily.stale_shares;
+            db.stale = data.result.daily.stale_shares;
         })
         .catch(log => {
             console.warn("API Call to shares/hash data failed!");

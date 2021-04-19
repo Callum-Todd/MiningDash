@@ -9,19 +9,26 @@ var date = require('date-and-time');
 const Discord = require("discord.js");
 const config = require("./config.json");
 
+var db = jsonfile.readFileSync('./public/db.json');
+var messageTrigger = false;
+var minPayout = 50000000000000000;
 var generalChan;
 var logsChan;
+var botFlag = true;
+
 const client = new Discord.Client();
 client.login(config.BOT_TOKEN);
 client.once('ready', () => {
     generalChan = client.channels.cache.get('832391997956161598');
     logsChan = client.channels.cache.get('832590219009720331')
 });
-
-var db = jsonfile.readFileSync('./public/db.json');
-
-var messageTrigger = false;
-var minPayout = 50000000000000000;
+client.on('mesaage', message => {
+    if (message.content === "!off") {
+        botFlag = false;
+    } else if (message.content === "!on") {
+        botFlag = true;
+    }
+})
 
 // db Interactions
 function estimatePayout() {
@@ -176,7 +183,7 @@ function update(bot) {
         db.hash_history.push(db.hashrate/1000000);
     }
 
-    if (db.hashrate < 180 && messageTrigger == false) {
+    if (db.hashrate < 180 && messageTrigger == false && botFlag == true) {
         messageTrigger = true;
         bot.send("@here Moira is down! 😢")
     }

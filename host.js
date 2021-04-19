@@ -348,7 +348,7 @@ const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
     // }
 
     db.workers.forEach(element => {
-        switch (element.workers) {
+        switch (element.name) {
             case "BattleMoira":
                 r = element.valid_shares;
                 break;

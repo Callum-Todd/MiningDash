@@ -33,7 +33,7 @@ client.on('mesaage', message => {
 // db Interactions
 function estimatePayout() {
     let diff = minPayout - db.poolbalance;
-    const rewards = Object.create(db.rewards);
+    const rewards = Object.create(db.rewards.reverse());
     rewards.reverse();
     let sum = 0;
     for (let i = 0; i < rewards.length; i++) {

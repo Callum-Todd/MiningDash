@@ -1,4 +1,4 @@
-var port = 8080;
+var port = 3000;
 var express = require('express');
 var app = express();
 var jsonfile = require('jsonfile');
@@ -226,6 +226,9 @@ app.get('/save', function(req, res, next){
 app.get('/payments', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/payed.html'));
 });
+app.get('/exspenses', function(req, res, next){
+    res.sendFile(path.join(__dirname + '/public/exsp.html'));
+});
 app.get('*', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/index.html'));
 });
@@ -248,10 +251,35 @@ app.post('/submitpayment', (req, res) => {
         "price": price,
         "date": date,
         "txid": txid
-      })
-      save();
-      res.sendFile(path.join(__dirname + '/public/index.html'));
-  })
+    })
+
+    save();
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+
+});
+
+app.post('/submitexspense', (req, res) => {
+    const amount = req.body.amount_field;
+    const user = req.body.user_field;
+    let date = req.body.date_field;
+    const info = req.body.info_field;
+    const year = date.substring(0,4);
+    const month = date.substring(5,7);
+    const day = date.substring(8, 10);
+    date = day + "/" + month + "/" + year;
+
+
+    db.exspenses.push({
+        "user": user,
+        "info": info,
+        "amount": amount,
+        "date": date
+    })
+    
+    save();
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+
+});
 
 // ------------------------------------------------------------>
 // Main

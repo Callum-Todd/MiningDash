@@ -14,7 +14,7 @@ var messageTrigger = false;
 var minPayout = 50000000000000000;
 var generalChan;
 var logsChan;
-var botFlag = true;
+var botFlag = false;
 
 const client = new Discord.Client();
 client.login(config.BOT_TOKEN);
@@ -59,7 +59,7 @@ function currentHash() {return  db.hashrate/1000000;}
 function currentPrice() {return db.price;}
 function currentPoolBalance() {return db.poolbalance}
 function currentMined() {
-    let diff;
+    let diff = 0;
     if (db.poolbalance < db.dailybalance) {
         diff = (minPayout - db.dailybalance) + db.poolbalance;
     } else {
@@ -322,14 +322,13 @@ const triggerFix = schedule.scheduleJob('0 * * * *', () => {
     
 
 // Daily Job executed at midnight
-const dailyJob = schedule.scheduleJob('5 0 * * *', (firetime) => {
+const dailyJob = schedule.scheduleJob('59 12 * * *', (firetime) => {
     update(generalChan);
     console.log("Daily job ran @" + firetime);
-
     let diff = currentMined();
 
     let now = new Date();
-    db.rewards.push({"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
+    db.rewards.splice(0,0,{"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
     db.dailybalance = db.poolbalance;
 
     let sum = 0;

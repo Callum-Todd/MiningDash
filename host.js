@@ -350,7 +350,7 @@ const triggerFix = schedule.scheduleJob('0 * * * *', () => {
     
 
 // Daily Job executed at midnight
-const dailyJob = schedule.scheduleJob('59 12 * * *', (firetime) => {
+const dailyJob = schedule.scheduleJob('9 0 * * *', (firetime) => {
     update(generalChan);
     console.log("Daily job ran @" + firetime);
     let diff = currentMined();

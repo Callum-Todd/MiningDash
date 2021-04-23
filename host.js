@@ -328,7 +328,8 @@ const dailyJob = schedule.scheduleJob('59 12 * * *', (firetime) => {
     let diff = currentMined();
 
     let now = new Date();
-    db.rewards.splice(0,0,{"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
+    // db.rewards.splice(0,0,{"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
+    db.rewards.push({"amount" : diff, "price" : db.price, "date" : date.format(now, 'DD/MM/YYYY') });
     db.dailybalance = db.poolbalance;
 
     let sum = 0;

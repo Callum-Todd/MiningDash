@@ -1,4 +1,4 @@
-var port = 3000;
+var port = 8080;
 var express = require('express');
 var app = express();
 var jsonfile = require('jsonfile');
@@ -31,20 +31,20 @@ client.on('mesaage', message => {
 })
 
 // db Interactions
-function estimatePayout() {
-    let diff = minPayout - db.poolbalance;
-    const rewards = Object.create(db.rewards);
-    rewards.reverse();
-    let sum = 0;
-    for (let i = 0; i < rewards.length; i++) {
-        const ele = rewards[i];
-        sum += ele.amount;
-        if (sum >= diff) {
-            return i;
-        }
-    }
-    return null;
-}
+// function estimatePayout() {
+//     let diff = minPayout - db.poolbalance;
+//     const rewards = Object.create(db.rewards.reverse());
+//     rewards.reverse();
+//     let sum = 0;
+//     for (let i = 0; i < rewards.length; i++) {
+//         const ele = rewards[i];
+//         sum += ele.amount;
+//         if (sum >= diff) {
+//             return i;
+//         }
+//     }
+//     return null;
+// }
 function currentShares() {
     let sum = 0;
     db.shares_buffer.forEach(element => {
@@ -79,13 +79,13 @@ function printer(opt) {
     console.log("Shares mined today:  " + currentShares());
     console.log("Eth mined today:     " + (currentMined()/1000000000000000000).toFixed(7));
     console.log("Value earned: £" + ((currentMined()/1000000000000000000)*db.price).toFixed(2));
-    if (estimatePayout() == 0) {
-        console.log("Expecting payout very soon!");
-    } else if (estimatePayout() == 1){
-        console.log("1 day until payout");
-    } else {
-        console.log(estimatePayout() + " days till payout");
-    }
+    // if (estimatePayout() == 0) {
+    //     console.log("Expecting payout very soon!");
+    // } else if (estimatePayout() == 1){
+    //     console.log("1 day until payout");
+    // } else {
+    //     console.log(estimatePayout() + " days till payout");
+    // }
     if (opt == true) {
         console.table(db.shares_buffer);
     }
@@ -97,8 +97,8 @@ function sendBotUpdate(bot) {
                     "\nDaily shares: " + currentShares() +
                     "\nValue earned: £" + ((currentMined()/1000000000000000000)*db.price).toFixed(2) +
                     "\nPrice of Ether: £" + currentPrice() + 
-                    "\nPool balance: " + (currentPoolBalance()/1000000000000000000).toFixed(6) +
-                    "\nEstimated days till next payout: " + estimatePayout();
+                    "\nPool balance: " + (currentPoolBalance()/1000000000000000000).toFixed(6); 
+                    // + "\nEstimated days till next payout: " + estimatePayout();
                                 
     bot.send(botString);
 }

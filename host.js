@@ -1,13 +1,14 @@
 var port = 3000;
-var express = require('express');
+const express = require('express');
 var app = express();
-var jsonfile = require('jsonfile');
-var fetch = require('cross-fetch');
-var path = require('path');
-var schedule = require('node-schedule');
-var date = require('date-and-time');
+const jsonfile = require('jsonfile');
+const fetch = require('cross-fetch');
+const path = require('path');
+const schedule = require('node-schedule');
+const date = require('date-and-time');
 const Discord = require("discord.js");
 const config = require("./config.json");
+const nunjucks = require('nunjucks')
 
 var db = jsonfile.readFileSync('./public/db.json');
 var messageTrigger = false;
@@ -15,6 +16,12 @@ var minPayout = 50000000000000000;
 var generalChan;
 var logsChan;
 var botFlag = false;
+
+nunjucks.configure(path.join(__dirname, 'views'), {
+    autoescape: true,
+    express: app,
+    watch: true
+  });
 
 const client = new Discord.Client();
 client.login(config.BOT_TOKEN);

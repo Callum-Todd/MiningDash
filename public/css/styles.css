@@ -37,6 +37,10 @@ body {
     display: inline;
 }
 
+.navi {
+    margin-bottom: 40px;
+}
+
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

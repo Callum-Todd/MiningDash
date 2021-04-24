@@ -1,0 +1,71 @@
+{% include "header.njk" %}
+
+<body>
+    <div class="container">
+
+        {% include "nav.njk" %}
+        
+        <div class="row" style="margin-top: 50px;">
+            <div class="five columns" style="text-align: left; margin-top: 15%;">
+                <div class="item">
+                    <p class="inline">Wallet Balance </p>
+                    <h6 id="walbal" style="display: inline; padding-left: 10px;"></h6>
+                </div>
+                <div class="item">
+                    <p class="inline">Pool Balance </p>
+                    <h6 id="poolbal" style="display: inline; padding-left: 10px;"></h6>
+                </div>
+                <div class="item">
+                    <p class="inline">Current Price  </p>
+                    <h6 id="price" style="display: inline; padding-left: 10px;"></h6>
+                </div>
+                <div class="item">
+                    <p class="inline">Current Hashrate  </p>
+                    <h6 id="hash" style="display: inline; padding-left: 10px;"></h6>
+                </div>
+            </div>
+            
+            <div class="seven columns" style="text-align: center;">
+                <h5>Wallet Balance Split</h5>
+                <canvas id="pieChart" width="600" height="400"></canvas>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="six columns" style="margin-top: 3%; display: inline;">
+                <h4>Workers</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Valid</th>
+                            <th>Stale</th>
+                            <th>Share</th>
+                        </tr>
+                    </thead>
+                    <tbody id="workertable"></tbody>
+                </table>
+            </div>
+            <div class=" six columns" style="margin-top: 3%; display: inline;">
+                <h4>Payments</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Value</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentstable"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        
+        <script src="/js/dashchart.js"></script>
+        <script src="/js/dashtables.js"></script>
+        <script src="/js/Chart.js"></script>
+        
+    </div>
+</body>

@@ -1,0 +1,60 @@
+{% include "header.njk" %}
+
+<body>
+    <div class="container">
+
+        {% include "nav.njk" %}
+        
+        <div class="row">
+            <div class="column">
+                <h4>Payments</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Value</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentstable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="six columns">
+                <h4>Daily Returns</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Value</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rewardstable"></tbody>
+                </table>
+            </div>
+            <div class="six columns">
+                <h4>Worker History</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Rig</th>
+                            <th>Andras</th>
+                            <th>Callum</th>
+                            <th>Mark</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="workhisttable"></tbody>
+                </table>
+            </div>
+        
+        <script src="/js/hist.js"></script>
+
+    </div>
+</body>

@@ -1,0 +1,50 @@
+{% include "header.njk" %}
+<body>
+    <div class="container">
+    {% include "nav.njk" %}
+    <div class="row">
+            <h5 class="u-pull-right" id="total_spent">0</h5><h5 class="u-pull-right" style="display: block;">Total spent: £</h5>
+        </div>
+
+        <div class="row">
+
+            <div class="six columns">
+                <form action="/submitexspense" method="post">
+                    <label for="info">Information</label>
+                    <input class="u-full-width" id="txid" type="text" name="info_field" placeholder="Electric..">
+
+                    <label for="info">User</label>
+                    <select name="user_field" id="user">
+                        <option disabled="" selected="">Who are you?</option>
+                        <option value="andras">Andras</option>
+                        <option value="callum">Callum</option>
+                        <option value="mark">Mark</option>
+                    </select>
+                    
+                    <label for="">Amount</label>
+                    <input class="u-full-width" id="amountfield" type="number" name="amount_field" step="0.01" placeholder="£ 0.00">
+                    
+                    <label for="date">Date</label>
+                    <input id="date" type="date" name="date_field">
+                    <input class="button-primary u-pull-right" type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="six columns">
+                <h4>Ledger</h4>
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount</th>
+                            <th>Info</th>
+                            <th>User</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ledgertable"></tbody>
+                </table>
+            </div>
+        </div>
+        <script src="/js/exsp.js"></script>
+        
+    </div>
+</body>

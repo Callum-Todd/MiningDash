@@ -1,0 +1,33 @@
+
+{% include "header.njk" %}
+
+<body>
+    <div class="container">
+
+        {% include "nav.njk" %}
+    
+    <div class="row">
+            <div class="three columns u-full-width">
+                <p></p>
+            </div>
+            <div class="six columns">
+                <form action="/submitpayment" method="post">
+                    <label for="txid">Txid</label>
+                    <input class="u-full-width" id="txid" type="text" name="txid_field" placeholder="0x...">
+                    
+                    <label for="amount">Amount</label>
+                    <input class="u-full-width" id="amount" type="number" name="amount_field" step="0.000001" placeholder="0.00000">
+                    
+                    <label for="price">Price</label>
+                    <input class="u-full-width" id="price" type="number" name="price_field" step="0.01" placeholder="1500.00">
+                    
+                    <label for="date">Date</label>
+                    <input id="date" type="date" name="date_field">
+                    <input class="button-primary u-pull-right" type="submit" value="Submit">
+                </form>
+            </div>
+            <div class="three columns u-full-width"><p></p></div>
+        </div>
+    
+    </div>
+</body>

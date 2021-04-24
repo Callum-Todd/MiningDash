@@ -17,11 +17,14 @@ var generalChan;
 var logsChan;
 var botFlag = false;
 
-nunjucks.configure(path.join(__dirname, 'views'), {
+app.use(express.static(__dirname + '/public'));
+app.use(express.urlencoded({
+    extended: true
+  }))
+  nunjucks.configure('public/views', {
     autoescape: true,
-    express: app,
-    watch: true
-  });
+    express: app
+});
 
 const client = new Discord.Client();
 client.login(config.BOT_TOKEN);
@@ -110,10 +113,6 @@ function sendBotUpdate(bot) {
     bot.send(botString);
 }
 
-app.use(express.static(__dirname + '/public'));
-app.use(express.urlencoded({
-    extended: true
-  }))
 
 // ------------------------------------------------------------>
 // Storage
@@ -201,43 +200,45 @@ function update(bot) {
 
 // ------------------------------------------------------------>
 // Routing
-app.get('/', function(req, res, next){
-    res.sendFile(path.join(__dirname + '/public/index.html'));
-    var ip = req.headers['x-real-ip'] || req.socket.remoteAddress;
-    console.log(ip + " has connected!");
+app.get('/index', function(req, res, next){
+    // res.sendFile(path.join(__dirname + '/public/index.html'));
+    // var ip = req.headers['x-real-ip'] || req.socket.remoteAddress;
+    // console.log(ip + " has connected!");
+    res.render("index.njk");
 });
 app.get('/json', function(req, res, next){
     res.sendFile(path.join(__dirname + '/public/db.json'));
 });
 app.get('/history', function(req, res, next){
-    res.sendFile(path.join(__dirname + '/public/hist.html'));
+    res.render("history.njk");
 });
 app.get('/projections', function(req, res, next){
-    res.sendFile(path.join(__dirname + '/public/proj.html'));
+    res.render("projections.njk");
 });
 app.get('/reset', function(req, res, next){
     db.luck_history = [];
     db.hash_history = [];
     save();
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+    res.render('index.njk');
 });
 app.get('/clearwallet', function(req, res, next){
     db.walletbalance = 0;
     save();
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+    res.render('index.njk');
 }); 
 app.get('/save', function(req, res, next){
     save();
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+    res.render('index.njk');
 }); 
 app.get('/payments', function(req, res, next){
-    res.sendFile(path.join(__dirname + '/public/payed.html'));
+    res.render('paid.njk');
 });
 app.get('/exspenses', function(req, res, next){
-    res.sendFile(path.join(__dirname + '/public/exsp.html'));
+    res.render('exspenses.njk');
+    
 });
 app.get('*', function(req, res, next){
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+    res.render('index.njk');
 });
 
 
@@ -251,17 +252,17 @@ app.post('/submitpayment', (req, res) => {
     const month = date.substring(5,7);
     const day = date.substring(8, 10);
     date = day + "/" + month + "/" + year;
-
-
+    
+    
     db.payments.push({
         "amount": (amount*1000000000000000000),
         "price": price,
         "date": date,
         "txid": txid
     })
-
+    
     save();
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+    res.redirect('/');
 
 });
 
@@ -284,7 +285,7 @@ app.post('/submitexspense', (req, res) => {
     })
     
     save();
-    res.sendFile(path.join(__dirname + '/public/index.html'));
+    res.redirect('/');
 
 });
 

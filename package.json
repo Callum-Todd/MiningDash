@@ -9,11 +9,13 @@
   "author": "Callum Todd",
   "license": "ISC",
   "dependencies": {
+    "chokidar": "^3.5.1",
     "cross-fetch": "^3.1.2",
     "date-and-time": "^0.14.2",
     "discord.js": "^12.5.3",
     "express": "^4.17.1",
     "jsonfile": "^6.1.0",
-    "node-schedule": "^2.0.0"
+    "node-schedule": "^2.0.0",
+    "nunjucks": "^3.2.3"
   }
 }

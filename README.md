@@ -5,6 +5,7 @@ Features:
 - Automated recording of daily returns and payments
 - Basic income / cost projections
 - Discord notifactions
+- Remote updates (`git pull` can be executed via 'host:port/git_pull' end point)
 
 Dependencies
 - Nodejs
@@ -14,6 +15,7 @@ Dependencies
 - date-and-time
 - cross-fetch
 - Jsonfile
+- Nodemon
 
 
 

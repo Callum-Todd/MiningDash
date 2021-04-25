@@ -1,13 +1,20 @@
 # MiningDash
-A simple web service for keeping track of a group mining rig.
+A simple web service for keeping track of a group mining effort.
 
 Features:
 - Automated recording of daily returns and payments
 - Basic income / cost projections
-- Discord Notifcations
+- Discord notifactions
 
-Intended Features:
-- Payout request system
+Dependencies
+- Nodejs
+- Express
+- Nunjucks
+- Discordjs
+- date-and-time
+- cross-fetch
+- Jsonfile
+
 
 
 

@@ -9,6 +9,7 @@ const date = require('date-and-time');
 const Discord = require("discord.js");
 const config = require("./config.json");
 const nunjucks = require('nunjucks')
+const { spawn } = require("child_process");
 
 var db = jsonfile.readFileSync('./public/db.json');
 var messageTrigger = false;
@@ -238,6 +239,14 @@ app.get('/exspenses', function(req, res, next){
     res.render('exspenses.njk');
     
 });
+app.get('/git_pull', function(req, res, next){
+    const pull = spawn("git", ["pull"]);
+    pull.stdout.on("data", data => {
+        console.log(`stdout: ${data}`);
+    });
+    res.render("history.njk");
+});
+
 app.get('*', function(req, res, next){
     res.render('index.njk');
 });

@@ -247,6 +247,8 @@ app.get('/git_pull', function(req, res, next){
     res.render("history.njk");
 });
 
+//test
+
 app.get('*', function(req, res, next){
     res.render('index.njk');
 });

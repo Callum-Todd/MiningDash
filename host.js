@@ -247,7 +247,7 @@ app.get('/git_pull', function(req, res, next){
 app.get('*', function(req, res, next){
     res.render('index.njk');
 });
-
+// update
 
 
 app.post('/submitpayment', (req, res) => {

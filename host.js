@@ -1,4 +1,4 @@
-var port = 3000;
+var port;
 const express = require('express');
 var app = express();
 const jsonfile = require('jsonfile');
@@ -17,6 +17,11 @@ var generalChan;
 var logsChan;
 var botFlag = false;
 
+if (process.argv.length < 3) {
+    port = 3000;
+} else {
+    port = process.argv[2];
+}
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({
     extended: true
@@ -162,8 +167,6 @@ function update(bot) {
             // console.log(log);
         })
 
-
-
         // fetch("https://api.ethermine.org/miner/d1c6ddd842180cd54eee389aa1302bcaf55fa44a/dashboard")
     //     .then(response => response.json())
     //     .then(dashboardData => {
@@ -195,8 +198,6 @@ function update(bot) {
     }
         
 }
-
-  
 
 // ------------------------------------------------------------>
 // Routing

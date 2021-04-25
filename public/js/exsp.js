@@ -9,10 +9,10 @@ fetch("db.json")
 
     for (let index = 0; index < data.exspenses.length; index++) {
         const ele = data.exspenses[index];
-        sum += ele.amount;
+        sum += parseFloat(ele.amount);
     }
-    total.innerHTML = sum;
-    total.textContent = (+total.textContent).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
+    // total.innerHTML = sum;
+    total.textContent = (sum).toLocaleString('en-US', { style: 'currency', currency: 'GBP' });
     for (let index = data.exspenses.length - 1; index >= 0; index--) {
         const item = data.exspenses[index];
         let row = lTable.insertRow();

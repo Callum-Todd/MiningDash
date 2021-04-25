@@ -4,7 +4,8 @@
   "description": "Dashboard webapp to track group mining rig",
   "main": "host.js",
   "scripts": {
-    "start": "node host.js"
+    "dev": "node host.js 3000",
+    "start": "nodemon host.js 8080 --config mon.cfg"
   },
   "author": "Callum Todd",
   "license": "ISC",

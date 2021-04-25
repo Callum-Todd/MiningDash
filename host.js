@@ -26,8 +26,8 @@ if (process.argv.length < 3) {
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({
     extended: true
-  }))
-  nunjucks.configure('public/views', {
+}))
+nunjucks.configure('public/views', {
     autoescape: true,
     express: app
 });
@@ -182,8 +182,6 @@ function update(bot) {
     //         // console.log(log);
     //     })
 
-
-        
     if (db.hash_history.length >= 20) {
         db.hash_history.shift();
     }
@@ -203,9 +201,6 @@ function update(bot) {
 // ------------------------------------------------------------>
 // Routing
 app.get('/index', function(req, res, next){
-    // res.sendFile(path.join(__dirname + '/public/index.html'));
-    // var ip = req.headers['x-real-ip'] || req.socket.remoteAddress;
-    // console.log(ip + " has connected!");
     res.render("index.njk");
 });
 app.get('/json', function(req, res, next){
@@ -235,8 +230,8 @@ app.get('/save', function(req, res, next){
 app.get('/payments', function(req, res, next){
     res.render('paid.njk');
 });
-app.get('/exspenses', function(req, res, next){
-    res.render('exspenses.njk');
+app.get('/ledger', function(req, res, next){
+    res.render('ledger.njk');
     
 });
 app.get('/git_pull', function(req, res, next){
@@ -249,9 +244,6 @@ app.get('/git_pull', function(req, res, next){
     });
     res.redirect('/');
 });
-
-//test
-
 app.get('*', function(req, res, next){
     res.render('index.njk');
 });

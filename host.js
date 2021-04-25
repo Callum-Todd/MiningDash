@@ -221,16 +221,16 @@ app.get('/reset', function(req, res, next){
     db.luck_history = [];
     db.hash_history = [];
     save();
-    res.render('index.njk');
+    res.redirect('/');
 });
 app.get('/clearwallet', function(req, res, next){
     db.walletbalance = 0;
     save();
-    res.render('index.njk');
+    res.redirect('/');
 }); 
 app.get('/save', function(req, res, next){
     save();
-    res.render('index.njk');
+    res.redirect('/');
 }); 
 app.get('/payments', function(req, res, next){
     res.render('paid.njk');
@@ -244,7 +244,10 @@ app.get('/git_pull', function(req, res, next){
     pull.stdout.on("data", data => {
         console.log(`stdout: ${data}`);
     });
-    res.render("history.njk");
+    pull.on('error', (error) => {
+        console.log(`error: ${error.message}`);
+    });
+    res.redirect('/');
 });
 
 //test

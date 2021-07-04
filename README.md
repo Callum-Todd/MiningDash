@@ -1,6 +1,8 @@
 # MiningDash
 A simple web service for keeping track of a group mining effort.
 
+_No longer updated_
+
 Features:
 - Automated recording of daily returns and payments
 - Basic income / cost projections
@@ -16,7 +18,3 @@ Dependencies
 - cross-fetch
 - Jsonfile
 - Nodemon
-
-
-
-
